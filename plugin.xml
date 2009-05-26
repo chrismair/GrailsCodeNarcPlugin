@@ -1,0 +1,8 @@
+<plugin name='codenarc' version='0.1'>
+  <author>Burt Beckwith</author>
+  <authorEmail>burt@burtbeckwith.com</authorEmail>
+  <title>CodeNarc plugin</title>
+  <description>Runs CodeNarc static analysis rules for Groovy source.</description>
+  <documentation>http://grails.org/plugin/codenarc</documentation>
+  <resources />
+</plugin>
