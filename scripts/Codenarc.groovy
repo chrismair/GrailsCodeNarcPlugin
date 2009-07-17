@@ -80,6 +80,14 @@ private List configureIncludes(config) {
 		includes << 'grails-app/utils/**/*.groovy'
 	}
 
+    if (getConfigBoolean(config, 'processTestUnit')) {
+        includes << 'test/unit/**/*.groovy'
+    }
+
+    if (getConfigBoolean(config, 'processTestIntegration')) {
+        includes << 'test/integration/**/*.groovy'
+    }
+
 	for (includeDir in config.extraIncludeDirs) {
 		includes << "$includeDir/**/*.groovy"
 	}

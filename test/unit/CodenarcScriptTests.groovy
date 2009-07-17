@@ -34,6 +34,8 @@ class CodenarcScriptTests extends GroovyTestCase {
     private static final SERVICES = 'grails-app/services/**/*.groovy'
     private static final TAGLIB = 'grails-app/taglib/**/*.groovy'
     private static final UTILS = 'grails-app/utils/**/*.groovy'
+    private static final TEST_UNIT = 'test/unit/**/*.groovy'
+    private static final TEST_INTEGRATION = 'test/integration/**/*.groovy'
     private static final HTML = 'html'
 
     private codeNarc
@@ -73,21 +75,28 @@ class CodenarcScriptTests extends GroovyTestCase {
     }
 
     void testRun_TurnOffSomeDefaultIncludes() {
-        expectedFilesetIncludes = [SERVICES, TAGLIB, UTILS].join(',')
-        def codeNarcConfig = [processDomain:false, processSrcGroovy:false, processControllers:false]
+        expectedFilesetIncludes = [SERVICES, TAGLIB, UTILS, TEST_INTEGRATION].join(',')
+        def codeNarcConfig = [processDomain:false, processSrcGroovy:false, processControllers:false, processTestUnit:false]
         testRun(codeNarcConfig)
     }
 
     void testRun_TurnOffOtherDefaultIncludes() {
-        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN].join(',')
-        def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false]
+        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT].join(',')
+        def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false]
+        testRun(codeNarcConfig)
+    }
+
+    void testRun_ExplicitlyIncludeDefaultIncludes() {
+        def codeNarcConfig = [
+                processDomain:true, processSrcGroovy:true, processControllers:true, processServices:true,
+                processTaglib:true, processUtils:true, processTestUnit:true, processTestIntegration:true]
         testRun(codeNarcConfig)
     }
 
     void testRun_ExtraIncludeDirs() {
         final EXTRA = ['abc', 'def/ghi']
-        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, 'abc/**/*.groovy', 'def/ghi/**/*.groovy'].join(',')
-        def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, extraIncludeDirs:EXTRA]
+        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT, 'abc/**/*.groovy', 'def/ghi/**/*.groovy'].join(',')
+        def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false, extraIncludeDirs:EXTRA]
         testRun(codeNarcConfig)
     }
 
@@ -171,7 +180,7 @@ class CodenarcScriptTests extends GroovyTestCase {
         expectedReportToFile = REPORT_FILE
         expectedReportType = HTML
         expectedReportTitle = ""
-        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS].join(',')
+        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS, TEST_UNIT, TEST_INTEGRATION].join(',')
     }
 
     private loadScriptClass() {
