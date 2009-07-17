@@ -13,7 +13,7 @@ private void runCodenarc() {
 
 	def config = loadConfig()
 
-	String reportName = config.reportName ?: 'CodeNarcAntReport.html'
+	String reportName = config.reportName ?: 'CodeNarcReport.html'
 	String reportType = config.reportType ?: 'html'
 	String reportTitle = config.reportTitle ?: ''
 	int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)

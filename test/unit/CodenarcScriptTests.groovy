@@ -23,18 +23,18 @@ import groovy.mock.interceptor.MockFor
  * @author Chris Mair
  */
 class CodenarcScriptTests extends GroovyTestCase {
-    static final TASKDEF = [name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask']
-    static final RULESET_FILES = 'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml'
-    static final MAX = Integer.MAX_VALUE
-    static final REPORT_FILE = 'CodeNarcAntReport.html'
-    static final FILESET_DIR = '.'
-    static final SRC_GROOVY = 'src/groovy/**/*.groovy'
-    static final CONTROLLERS = 'grails-app/controllers/**/*.groovy'
-    static final DOMAIN = 'grails-app/domain/**/*.groovy'
-    static final SERVICES = 'grails-app/services/**/*.groovy'
-    static final TAGLIB = 'grails-app/taglib/**/*.groovy'
-    static final UTILS = 'grails-app/utils/**/*.groovy'
-    static final HTML = 'html'
+    private static final TASKDEF = [name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask']
+    private static final RULESET_FILES = 'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml'
+    private static final MAX = Integer.MAX_VALUE
+    private static final REPORT_FILE = 'CodeNarcReport.html'
+    private static final FILESET_DIR = '.'
+    private static final SRC_GROOVY = 'src/groovy/**/*.groovy'
+    private static final CONTROLLERS = 'grails-app/controllers/**/*.groovy'
+    private static final DOMAIN = 'grails-app/domain/**/*.groovy'
+    private static final SERVICES = 'grails-app/services/**/*.groovy'
+    private static final TAGLIB = 'grails-app/taglib/**/*.groovy'
+    private static final UTILS = 'grails-app/utils/**/*.groovy'
+    private static final HTML = 'html'
 
     private codeNarc
     private codeNarcAntTask
