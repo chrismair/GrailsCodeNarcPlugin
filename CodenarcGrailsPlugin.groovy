@@ -1,10 +1,10 @@
 class CodenarcGrailsPlugin {
 
-	String version = '0.1'
+	String version = '0.2'
 	Map dependsOn = [:]
 
-	String author = 'Burt Beckwith'
-	String authorEmail = 'burt@burtbeckwith.com'
+	String author = 'Chris Mair'                            // ORIGINAL: 'Burt Beckwith'
+	String authorEmail = 'chrismair@users.sourceforge.net'  // ORIGINAL: 'burt@burtbeckwith.com'
 	String title = 'CodeNarc plugin'
 	String description = 'Runs CodeNarc static analysis rules for Groovy source.'
 	String documentation = 'http://grails.org/plugin/codenarc'
