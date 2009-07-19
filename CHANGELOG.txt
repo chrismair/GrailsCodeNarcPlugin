@@ -1,0 +1,13 @@
+CodeNarc Grails Plugin Change Log
+-------------------------------------------------------------------------------
+http://grails.org/plugin/codenarc
+
+Changes in version 0.2 (18 Jul 2009)
+------------------------------------
+- Add “Unused” ruleset to default rulesets.
+- Upgrade to CodeNarc 0.6.
+- Include “test” folders in analysis; add codenarc.processTestUnit and codenarc.processTestIntegration  properties in Config.groovy.
+- Rename default report file to “CodeNarcReport.html”.
+- Update author and authorEmail fields in CodenarcGrailsPlugin. (Original=Burt Beckwith).
+- Create automated test script for CodeNarc plugin.
+- Create tests for plugin.
