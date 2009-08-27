@@ -2,6 +2,12 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.3 (26 Aug 2009)
+------------------------------------
+- Upgrade to CodeNarc 0.7. This includes support for optionally prefixing ruleset file paths with "file:" to
+  indicate a relative or absolute path in the filesystem rather than (the default of) being relative to the classpath.
+
+
 Changes in version 0.2 (18 Jul 2009)
 ------------------------------------
 - Add “Unused” ruleset to default rulesets.

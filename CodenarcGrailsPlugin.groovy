@@ -1,6 +1,6 @@
 class CodenarcGrailsPlugin {
 
-	String version = '0.2'
+	String version = '0.3'
 	Map dependsOn = [:]
 
 	String author = 'Chris Mair'                            // ORIGINAL: 'Burt Beckwith'

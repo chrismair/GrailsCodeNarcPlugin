@@ -1,4 +1,4 @@
-<plugin name='codenarc' version='0.2'>
+<plugin name='codenarc' version='0.3'>
   <author>Chris Mair</author>
   <authorEmail>chrismair@users.sourceforge.net</authorEmail>
   <title>CodeNarc plugin</title>
