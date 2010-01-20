@@ -2,6 +2,12 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.4 (19 Jan 2010)
+------------------------------------
+- Upgrade to CodeNarc 0.8. This includes XML and Text report formats (beta), a new NestedBlockDepthRule,
+  enhancement of the applyToFileNames rule property to handle optional path (e.g. “abc/def/MyClass.groovy”).
+
+
 Changes in version 0.3 (26 Aug 2009)
 ------------------------------------
 - Upgrade to CodeNarc 0.7. This includes support for optionally prefixing ruleset file paths with "file:" to
