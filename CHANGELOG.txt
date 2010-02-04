@@ -2,6 +2,11 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.5 (03 Feb 2010)
+------------------------------------
+- Upgrade to CodeNarc 0.8.1 (bug fixes).
+
+
 Changes in version 0.4 (19 Jan 2010)
 ------------------------------------
 - Upgrade to CodeNarc 0.8. This includes XML and Text report formats (beta), a new NestedBlockDepthRule,
