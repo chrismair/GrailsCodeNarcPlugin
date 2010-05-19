@@ -51,12 +51,19 @@ class CodenarcScriptTests extends GroovyTestCase {
     private expectedReportToFile
     private expectedReportTitle
     private expectedFilesetIncludes
+    private expectCallToConfigSlurper = true
 
     //-------------------------------------------------------------------------
     // Tests
     //-------------------------------------------------------------------------
 
     void testRun_Defaults() {
+        testRun([:])
+    }
+
+    void testRun_NoConfigGroovy() {
+        binding.configClassname = 'NoSuchClass'
+        expectCallToConfigSlurper = false
         testRun([:])
     }
 
@@ -143,12 +150,17 @@ class CodenarcScriptTests extends GroovyTestCase {
         def antProxy = ant.proxyInstance()
         binding.setVariable("ant", antProxy)
 
-        // Intercept and mock call to ConfigSlurper.parse() to provide test config data
-        def mockConfigSlurper = new MockFor(ConfigSlurper)
-        def configObject = new ConfigObject()
-        configObject.putAll(config) 
-        mockConfigSlurper.demand.parse { arg -> configObject }
-        mockConfigSlurper.use {
+        if (expectCallToConfigSlurper) {
+            // Intercept and mock call to ConfigSlurper.parse() to provide test config data
+            def mockConfigSlurper = new MockFor(ConfigSlurper)
+            def configObject = new ConfigObject()
+            configObject.putAll(config)
+            mockConfigSlurper.demand.parse { arg -> configObject }
+            mockConfigSlurper.use {
+                codeNarc.run()
+            }
+        }
+        else {
             codeNarc.run()
         }
 

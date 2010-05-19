@@ -17,6 +17,8 @@ import grails.util.GrailsUtil
 
 includeTargets << grailsScript('Compile')
 
+configClassname = 'Config'
+
 target('default': 'Run CodeNarc') {
 	depends(compile)
 
@@ -55,7 +57,13 @@ private void runCodenarc() {
 private ConfigObject loadConfig() {
 	def classLoader = Thread.currentThread().contextClassLoader
 	classLoader.addURL(new File(classesDirPath).toURL())
-	return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass('Config')).codenarc
+    try {
+        def className = getProperty('configClassname')
+        return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)).codenarc
+    }
+    catch(ClassNotFoundException e) {
+        return new ConfigObject()
+    }
 }
 
 private int getConfigInt(config, String name, int defaultIfMissing) {
