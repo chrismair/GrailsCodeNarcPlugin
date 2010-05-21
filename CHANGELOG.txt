@@ -2,6 +2,13 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.6 (21 May 2010)
+------------------------------------
+- Fix bug #1941: "Getting error trying grails codenarc using 0.4 in grails 1.2.1". http://jira.codehaus.org/browse/GRAILSPLUGINS-1941. Modify "CodeNarc.groovy" to not crash id the "Config.groovy" file is missing.
+- CodeNarcRunner fixed to also println() summary in addition to LOG.info(). [Fixed in CodeNarc v0.9]
+- Fix "Error executing script Codenarc: groovy.lang.MissingPropertyException: No such property: W3C_XML_SCHEMA_NS_URI for class: javax.xml.XMLConstants gant.TargetExecutionException: groovy.lang.MissingPropertyException: No such property: W3C_XML_SCHEMA_NS_URI for class". [Fixed in CodeNarc v0.9]
+
+
 Changes in version 0.5 (03 Feb 2010)
 ------------------------------------
 - Upgrade to CodeNarc 0.8.1 (bug fixes).
