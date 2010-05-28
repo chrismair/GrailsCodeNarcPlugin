@@ -117,3 +117,12 @@ private List configureIncludes(config) {
 
 	return includes
 }
+
+try {
+    // Required for Grails 1.3 and later
+	setDefaultTarget("default")
+}
+catch(MissingMethodException e) {
+	// Ignore. Older versions of Groovy/Grails do not implement this method
+}
+
