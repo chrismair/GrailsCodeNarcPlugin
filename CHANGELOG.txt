@@ -2,6 +2,14 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.7 (2 Oct 2010)
+--------------------------------------
+- Add support in "Config.groovy" for using a custom “codenarc.properties”.
+    * Support setting an optional property: e.g. codenarc.propertiesFile = “file:grails-app/conf/codenarc.properties”. Prepend "file:" prefix.
+- Upgrade to CodeNarc v0.10.
+- Upgrade project to Grails 1.2. This does not affect the versions of Grails supported by the plugin.
+
+
 Changes in version 0.6.1 (27 May 2010)
 --------------------------------------
 - Fix http://jira.codehaus.org/browse/GRAILSPLUGINS-2193. “CodeNarc plugin doesn’t run (on Grails 1.3.1)”. Explicitly set default target within “Codenarc.groovy” script.

@@ -37,6 +37,7 @@ class CodenarcScriptTests extends GroovyTestCase {
     private static final TEST_UNIT = 'test/unit/**/*.groovy'
     private static final TEST_INTEGRATION = 'test/integration/**/*.groovy'
     private static final HTML = 'html'
+    private static final PROPERTIES_FILE_PROP = "codenarc.properties.file"
 
     private codeNarc
     private codeNarcAntTask
@@ -59,6 +60,13 @@ class CodenarcScriptTests extends GroovyTestCase {
 
     void testRun_Defaults() {
         testRun([:])
+    }
+
+    void testRun_CustomCodeNarcPropertiesFile() {
+        assert !System.getProperty(PROPERTIES_FILE_PROP)
+        def codeNarcConfig = [propertiesFile:'dir/xxx.properties']
+        testRun(codeNarcConfig)
+        assert System.getProperty(PROPERTIES_FILE_PROP) == 'file:dir/xxx.properties' 
     }
 
     void testRun_NoConfigGroovy() {
@@ -112,7 +120,7 @@ class CodenarcScriptTests extends GroovyTestCase {
     //-------------------------------------------------------------------------
 
     /**
-     * Perform a test of the Codenarc.groovy script. Populate the test-specific appliction configuration
+     * Perform a test of the Codenarc.groovy script. Populate the test-specific application configuration
      * (simulating "Config.groovy") with the specified config Map. Execute the script, mocking out the
      * Ant/Gant infrastructure and script dependencies. Compare the parameters passed to the CodeNarc
      * ant task with the "expected" variables set up for this test.

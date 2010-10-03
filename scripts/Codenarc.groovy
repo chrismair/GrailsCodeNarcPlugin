@@ -40,6 +40,8 @@ private void runCodenarc() {
 		'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
 	List includes = configureIncludes(config)
 
+    configureCodeNarcPropertiesFile(config)
+
 	println "Running CodeNarc ..."
 
 	ant.codenarc(ruleSetFiles: ruleSetFiles,
@@ -63,6 +65,14 @@ private ConfigObject loadConfig() {
     }
     catch(ClassNotFoundException e) {
         return new ConfigObject()
+    }
+}
+
+private void configureCodeNarcPropertiesFile(ConfigObject config) {
+    final PROPERTIES_FILE_PROP = "codenarc.properties.file"
+    if (config.propertiesFile) {
+        def propValue = "file:" + config.propertiesFile
+        System.setProperty(PROPERTIES_FILE_PROP, propValue)
     }
 }
 

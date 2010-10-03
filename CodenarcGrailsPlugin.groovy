@@ -15,7 +15,10 @@
  */
 class CodenarcGrailsPlugin {
 
-	String version = '0.6.1'
+	String version = '0.7'
+
+    def grailsVersion = '1.0.2 > *'
+
 	Map dependsOn = [:]
 
 	String author = 'Chris Mair'                            // ORIGINAL: 'Burt Beckwith'
