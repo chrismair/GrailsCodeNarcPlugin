@@ -19,7 +19,7 @@ includeTargets << grailsScript('Compile')
 
 configClassname = 'Config'
 
-target('default': 'Run CodeNarc') {
+target('codenarc': 'Run CodeNarc') {
 	depends(compile)
 
 	runCodenarc()
@@ -130,7 +130,7 @@ private List configureIncludes(config) {
 
 try {
     // Required for Grails 1.3 and later
-	setDefaultTarget("default")
+	setDefaultTarget("codenarc")
 }
 catch(MissingMethodException e) {
 	// Ignore. Older versions of Groovy/Grails do not implement this method
