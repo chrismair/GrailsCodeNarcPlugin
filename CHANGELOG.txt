@@ -2,6 +2,11 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.12 (?? Mar 2011)
+--------------------------------------
+- Fix #2954: Provide error message on failure instead of throwing BuildException.
+  Add support for systemExitOnBuildException configuration option; defaults to true.
+
 Changes in version 0.11 (11 Mar 2011)
 --------------------------------------
 - Fixed dependencies so that CodeNarc jar is no longer bundled in the WAR Grails creates.

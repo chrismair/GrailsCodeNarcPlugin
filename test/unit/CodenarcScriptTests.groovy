@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import groovy.mock.interceptor.MockFor
+import org.apache.tools.ant.BuildException
 
 /**
  * Unit tests for the CodeNarc script
@@ -38,11 +39,13 @@ class CodenarcScriptTests extends GroovyTestCase {
     private static final TEST_INTEGRATION = 'test/integration/**/*.groovy'
     private static final HTML = 'html'
     private static final PROPERTIES_FILE_PROP = "codenarc.properties.file"
+    private static final BUILD_EXCEPTION = new BuildException('Test BuildException')
 
     private codeNarc
     private codeNarcAntTask
     private ant
     private binding
+    private systemExitStatus
 
     private expectedRuleSetFiles
     private expectedMaxPriority1Violations
@@ -115,6 +118,25 @@ class CodenarcScriptTests extends GroovyTestCase {
         testRun(codeNarcConfig)
     }
 
+    void testRun_ThrowsBuildException_SystemExitOnBuildException_False() {
+        def codeNarcConfig = [systemExitOnBuildException:false]
+        shouldFail(BuildException) {
+            testRunThrowsException(codeNarcConfig, BUILD_EXCEPTION)
+        }
+    }
+
+    void testRun_ThrowsBuildException_SystemExitOnBuildException_True() {
+        def codeNarcConfig = [systemExitOnBuildException:true]
+        testRunThrowsException(codeNarcConfig, BUILD_EXCEPTION)
+        assert systemExitStatus == 1
+    }
+
+    void testRun_ThrowsBuildException_SystemExitOnBuildException_NotSet_DefaultsToTrue() {
+        def codeNarcConfig = [:]
+        testRunThrowsException(codeNarcConfig, BUILD_EXCEPTION)
+        assert systemExitStatus == 1
+    }
+
     //-------------------------------------------------------------------------
     // Setup and Helper Methods
     //-------------------------------------------------------------------------
@@ -129,7 +151,6 @@ class CodenarcScriptTests extends GroovyTestCase {
      *      (simulated) "Config.groovy", under the "codenarc" key.
      */
     private void testRun(Map codeNarcConfig) {
-        def config = [codenarc:codeNarcConfig]
         ant.demand.taskdef { args -> assert args == TASKDEF }
 
         ant.demand.codenarc { props, closure ->
@@ -155,6 +176,22 @@ class CodenarcScriptTests extends GroovyTestCase {
             codeNarcAntTask.verify(codeNarcAntTaskProxy)
         }
 
+        runCodeNarc(codeNarcConfig)
+    }
+
+    private void testRunThrowsException(Map codeNarcConfig, exception) {
+        ant.demand.taskdef { args -> assert args == TASKDEF }
+
+        ant.demand.codenarc { props, closure ->
+            println "codenarc ant task properties=$props"
+            throw exception
+        }
+
+        runCodeNarc(codeNarcConfig)
+    }
+
+    private void runCodeNarc(Map codeNarcConfig) {
+        def config = [codenarc:codeNarcConfig]
         def antProxy = ant.proxyInstance()
         binding.setVariable("ant", antProxy)
 
@@ -175,6 +212,7 @@ class CodenarcScriptTests extends GroovyTestCase {
         ant.verify(antProxy)
     }
 
+
     void setUp() {
         super.setUp()
 
@@ -191,6 +229,8 @@ class CodenarcScriptTests extends GroovyTestCase {
         binding.setVariable("classesDirPath", '.')
 
         codeNarc = loadScriptClass()
+
+        System.metaClass.static.exit = { int exitCode -> println "Calling System.exit($exitCode)"; systemExitStatus = exitCode }
 
         // Initialize expected values for all configurable values
         expectedRuleSetFiles = RULESET_FILES

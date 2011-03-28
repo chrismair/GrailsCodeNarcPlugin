@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import grails.util.GrailsUtil
+import org.apache.tools.ant.BuildException
 
 includeTargets << grailsScript('Compile')
 
@@ -39,19 +40,31 @@ private void runCodenarc() {
 	String ruleSetFiles = config.ruleSetFiles ?:
 		'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
 	List includes = configureIncludes(config)
+    boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
 
     configureCodeNarcPropertiesFile(config)
 
 	println "Running CodeNarc ..."
 
-	ant.codenarc(ruleSetFiles: ruleSetFiles,
-			maxPriority1Violations: maxPriority1Violations,
-			maxPriority2Violations: maxPriority2Violations,
-			maxPriority3Violations: maxPriority3Violations) {
+    try {
+        ant.codenarc(ruleSetFiles: ruleSetFiles,
+                maxPriority1Violations: maxPriority1Violations,
+                maxPriority2Violations: maxPriority2Violations,
+                maxPriority3Violations: maxPriority3Violations) {
 
-		report(type: reportType, toFile: reportName, title: reportTitle)
-		fileset(dir: '.', includes: includes.join(','))
-	}
+            report(type: reportType, toFile: reportName, title: reportTitle)
+            fileset(dir: '.', includes: includes.join(','))
+        }
+    }
+    catch(BuildException e) {
+        if (systemExitOnBuildException) {
+            println "FAILED -- ${e.message}"
+            System.exit(1)
+        }
+        else {
+            throw e
+        }
+    }
 
 	println "CodeNarc finished; report generated: $reportName"
 }
