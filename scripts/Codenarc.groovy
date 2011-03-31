@@ -31,9 +31,8 @@ private void runCodenarc() {
 
 	def config = loadConfig()
 
-	String reportName = config.reportName ?: 'CodeNarcReport.html'
-	String reportType = config.reportType ?: 'html'
-	String reportTitle = config.reportTitle ?: ''
+    def reports = getConfiguredReports(config)
+
 	int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)
 	int maxPriority2Violations = getConfigInt(config, 'maxPriority2Violations', Integer.MAX_VALUE)
 	int maxPriority3Violations = getConfigInt(config, 'maxPriority3Violations', Integer.MAX_VALUE)
@@ -52,7 +51,9 @@ private void runCodenarc() {
                 maxPriority2Violations: maxPriority2Violations,
                 maxPriority3Violations: maxPriority3Violations) {
 
-            report(type: reportType, toFile: reportName, title: reportTitle)
+            reports.each { r ->
+                report(type: r.type, toFile: r.name, title: r.title)
+            }
             fileset(dir: '.', includes: includes.join(','))
         }
     }
@@ -66,7 +67,8 @@ private void runCodenarc() {
         }
     }
 
-	println "CodeNarc finished; report generated: $reportName"
+    def reportNames = reports*.name
+	println "CodeNarc finished; report generated: $reportNames"
 }
 
 private ConfigObject loadConfig() {
@@ -79,6 +81,45 @@ private ConfigObject loadConfig() {
     catch(ClassNotFoundException e) {
         return new ConfigObject()
     }
+}
+
+private static class ReportsDslDelegate {
+    List reports = []
+    def methodMissing(String name, args) {
+        println "Adding report $name"
+        //assert args.size() == 1
+        // assert args[0] instanceof Closure
+        def reportClosure = args[0]
+        def report = new ReportDelegate()
+        reportClosure.delegate = report
+        reportClosure.resolveStrategy = Closure.DELEGATE_FIRST
+        reportClosure.call()
+        reports << [name:report.name, type:report.type, title:report.title]
+    }
+}
+
+private static class ReportDelegate {
+    String type
+    String name
+    String title
+}
+
+private List getConfiguredReports(config) {
+    if (config.reports) {
+        // assert config.reports instanceof Closure
+        def closure = config.reports
+        def delegate = new ReportsDslDelegate()
+        closure.resolveStrategy = Closure.DELEGATE_FIRST
+        closure.delegate = delegate
+        closure.call()
+        return delegate.reports
+    }
+
+    String reportName = config.reportName ?: 'CodeNarcReport.html'
+    String reportType = config.reportType ?: 'html'
+    String reportTitle = config.reportTitle ?: ''
+    def reports = [[name:reportName, type:reportType, title:reportTitle]]
+    return reports
 }
 
 private void configureCodeNarcPropertiesFile(ConfigObject config) {

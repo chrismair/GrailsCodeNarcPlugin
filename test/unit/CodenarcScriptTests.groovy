@@ -51,9 +51,7 @@ class CodenarcScriptTests extends GroovyTestCase {
     private expectedMaxPriority1Violations
     private expectedMaxPriority2Violations
     private expectedMaxPriority3Violations
-    private expectedReportType
-    private expectedReportToFile
-    private expectedReportTitle
+    private expectedReports
     private expectedFilesetIncludes
     private expectCallToConfigSlurper = true
 
@@ -82,9 +80,8 @@ class CodenarcScriptTests extends GroovyTestCase {
         def codeNarcConfig = [
                 reportName:'RRR', reportType:'xml', reportTitle:'TTT', ruleSetFiles:'FFF',
                 maxPriority1Violations:11, maxPriority2Violations:12, maxPriority3Violations:13]
-        expectedReportToFile = 'RRR'
-        expectedReportType = 'xml'
-        expectedReportTitle = 'TTT'
+
+        expectedReports = [ [type:'xml', toFile:'RRR', title:'TTT'] ]
         expectedMaxPriority1Violations = 11
         expectedMaxPriority2Violations = 12
         expectedMaxPriority3Violations = 13
@@ -117,6 +114,50 @@ class CodenarcScriptTests extends GroovyTestCase {
         def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false, extraIncludeDirs:EXTRA]
         testRun(codeNarcConfig)
     }
+
+    // Reports
+
+    void testRun_ReportsClosure_OneReport() {
+        final REPORTS = {
+            MyXmlReport {
+                type = 'xml'
+                name = 'RRR'
+                title = 'TTT'
+            }
+        }
+        expectedReports = [ [type:'xml', toFile:'RRR', title:'TTT'] ]
+        testRun([reports:REPORTS])
+    }
+
+    void testRun_ReportsClosure_TwoReports() {
+        final REPORTS = {
+            MyConsoleReport {
+                type = 'console'
+                title = 'CCC'
+            }
+            MyXmlReport {
+                type = 'xml'
+                name = 'RRR'
+                title = 'TTT'
+            }
+        }
+        expectedReports = [ [type:'console', toFile:null, title:'CCC'], [type:'xml', toFile:'RRR', title:'TTT'] ]
+        testRun([reports:REPORTS])
+    }
+
+    void testRun_ReportsClosure_OverridesReportProperties() {
+        final REPORTS = {
+            MyXmlReport {
+                type = 'xml'
+                name = 'RRR'
+                title = 'TTT'
+            }
+        }
+        expectedReports = [ [type:'xml', toFile:'RRR', title:'TTT'] ]
+        testRun([reports:REPORTS, reportName:'XXX', reportType:'text', reportTitle:'Ignore'])
+    }
+
+    // Throws BuildException
 
     void testRun_ThrowsBuildException_SystemExitOnBuildException_False() {
         def codeNarcConfig = [systemExitOnBuildException:false]
@@ -160,9 +201,11 @@ class CodenarcScriptTests extends GroovyTestCase {
 			assert props.maxPriority2Violations == expectedMaxPriority2Violations
 			assert props.maxPriority3Violations == expectedMaxPriority3Violations
 
-            codeNarcAntTask.demand.report { args ->
-                println "report properties=$args"
-                assert args == [type:expectedReportType, toFile:expectedReportToFile, title:expectedReportTitle]
+            expectedReports.each { expectedReport ->
+                codeNarcAntTask.demand.report { args ->
+                    println "report properties=$args"
+                    assert args == [type:expectedReport.type, toFile:expectedReport.toFile, title:expectedReport.title]
+                }
             }
             codeNarcAntTask.demand.fileset { args ->
                 println "fileset properties=$args"
@@ -237,10 +280,8 @@ class CodenarcScriptTests extends GroovyTestCase {
         expectedMaxPriority1Violations = MAX
         expectedMaxPriority2Violations = MAX
         expectedMaxPriority3Violations = MAX
-        expectedReportToFile = REPORT_FILE
-        expectedReportType = HTML
-        expectedReportTitle = ""
         expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS, TEST_UNIT, TEST_INTEGRATION].join(',')
+        expectedReports = [ [type:HTML, toFile:REPORT_FILE, title:''] ]
     }
 
     private loadScriptClass() {
