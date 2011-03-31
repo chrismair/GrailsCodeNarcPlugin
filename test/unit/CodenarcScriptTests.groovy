@@ -23,7 +23,8 @@ import org.apache.tools.ant.BuildException
  *
  * @author Chris Mair
  */
-class CodenarcScriptTests extends GroovyTestCase {
+class CodenarcScriptTests extends AbstractTestCase {
+
     private static final TASKDEF = [name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask']
     private static final RULESET_FILES = 'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
     private static final MAX = Integer.MAX_VALUE
@@ -121,11 +122,11 @@ class CodenarcScriptTests extends GroovyTestCase {
         final REPORTS = {
             MyXmlReport {
                 type = 'xml'
-                name = 'RRR'
+                outputFile = 'RRR'
                 title = 'TTT'
             }
         }
-        expectedReports = [ [type:'xml', toFile:'RRR', title:'TTT'] ]
+        expectedReports = [ [type:'xml', outputFile:'RRR', title:'TTT'] ]
         testRun([reports:REPORTS])
     }
 
@@ -137,11 +138,11 @@ class CodenarcScriptTests extends GroovyTestCase {
             }
             MyXmlReport {
                 type = 'xml'
-                name = 'RRR'
                 title = 'TTT'
+                writeToStandardOut = true
             }
         }
-        expectedReports = [ [type:'console', toFile:null, title:'CCC'], [type:'xml', toFile:'RRR', title:'TTT'] ]
+        expectedReports = [ [type:'console', outputFile:null, title:'CCC'], [type:'xml', title:'TTT', writeToStandardOut:true] ]
         testRun([reports:REPORTS])
     }
 
@@ -149,12 +150,34 @@ class CodenarcScriptTests extends GroovyTestCase {
         final REPORTS = {
             MyXmlReport {
                 type = 'xml'
-                name = 'RRR'
+                outputFile = 'RRR'
                 title = 'TTT'
             }
         }
-        expectedReports = [ [type:'xml', toFile:'RRR', title:'TTT'] ]
+        expectedReports = [ [type:'xml', outputFile:'RRR', title:'TTT'] ]
         testRun([reports:REPORTS, reportName:'XXX', reportType:'text', reportTitle:'Ignore'])
+    }
+
+    void testRun_ReportsClosure_DoesNotDefineReportType_ThrowsException() {
+        final REPORTS = {
+            MyReport {
+                outputFile = 'RRR'
+                title = 'TTT'
+            }
+        }
+        shouldFailWithMessageContaining('type') { testRun([reports:REPORTS]) }
+    }
+
+    void testRun_ReportsNotAClosure_ThrowsException() {
+        final REPORTS = [type:'xml']
+        shouldFailWithMessageContaining('reports') { testRun([reports:REPORTS]) }
+    }
+
+    void testRun_ReportNotAClosure_ThrowsException() {
+        final REPORTS = {
+            MyReport(type:'xml')
+        }
+        shouldFailWithMessageContaining('MyReport') { testRun([reports:REPORTS]) }
     }
 
     // Throws BuildException

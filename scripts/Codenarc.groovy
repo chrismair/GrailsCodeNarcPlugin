@@ -88,25 +88,20 @@ private static class ReportsDslDelegate {
     def methodMissing(String name, args) {
         println "Adding report $name"
         //assert args.size() == 1
-        // assert args[0] instanceof Closure
+        assert args[0] instanceof Closure, "Report name [$name] must be followed by a Closure"
         def reportClosure = args[0]
-        def report = new ReportDelegate()
+        def report = new Expando()
         reportClosure.delegate = report
         reportClosure.resolveStrategy = Closure.DELEGATE_FIRST
         reportClosure.call()
+        assert report.type, "The report definition for [$name] must specify the report 'type' property"
         reports << [name:report.name, type:report.type, title:report.title]
     }
 }
 
-private static class ReportDelegate {
-    String type
-    String name
-    String title
-}
-
 private List getConfiguredReports(config) {
     if (config.reports) {
-        // assert config.reports instanceof Closure
+        assert config.reports instanceof Closure, "The reports property value must be a Closure"
         def closure = config.reports
         def delegate = new ReportsDslDelegate()
         closure.resolveStrategy = Closure.DELEGATE_FIRST
