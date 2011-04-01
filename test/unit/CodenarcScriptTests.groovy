@@ -82,7 +82,7 @@ class CodenarcScriptTests extends AbstractTestCase {
                 reportName:'RRR', reportType:'xml', reportTitle:'TTT', ruleSetFiles:'FFF',
                 maxPriority1Violations:11, maxPriority2Violations:12, maxPriority3Violations:13]
 
-        expectedReports = [ [type:'xml', toFile:'RRR', title:'TTT'] ]
+        expectedReports = [ [type:'xml', outputFile:'RRR', title:'TTT'] ]
         expectedMaxPriority1Violations = 11
         expectedMaxPriority2Violations = 12
         expectedMaxPriority3Violations = 13
@@ -142,7 +142,7 @@ class CodenarcScriptTests extends AbstractTestCase {
                 writeToStandardOut = true
             }
         }
-        expectedReports = [ [type:'console', outputFile:null, title:'CCC'], [type:'xml', title:'TTT', writeToStandardOut:true] ]
+        expectedReports = [ [type:'console', title:'CCC'], [type:'xml', title:'TTT', writeToStandardOut:true] ]
         testRun([reports:REPORTS])
     }
 
@@ -225,9 +225,23 @@ class CodenarcScriptTests extends AbstractTestCase {
 			assert props.maxPriority3Violations == expectedMaxPriority3Violations
 
             expectedReports.each { expectedReport ->
-                codeNarcAntTask.demand.report { args ->
-                    println "report properties=$args"
-                    assert args == [type:expectedReport.type, toFile:expectedReport.toFile, title:expectedReport.title]
+                def otherProperties = new HashMap(expectedReport)
+                otherProperties.remove('type')
+
+                // Build internal delegate for the report closure; handle the calls to option()
+                def options = [:]
+                def optionDelegate = new Expando([option:{ map ->
+                    println "call to option() with $map"
+                    options << [(map.name):(map.value)]}])
+
+                codeNarcAntTask.demand.report { reportProps, reportClosure ->
+                    println "report properties=$reportProps"
+                    assert reportProps == [type:expectedReport.type]
+
+                    reportClosure.delegate = optionDelegate
+                    reportClosure.resolveStrategy = Closure.DELEGATE_FIRST
+                    reportClosure()
+                    assert options == otherProperties
                 }
             }
             codeNarcAntTask.demand.fileset { args ->
@@ -304,7 +318,7 @@ class CodenarcScriptTests extends AbstractTestCase {
         expectedMaxPriority2Violations = MAX
         expectedMaxPriority3Violations = MAX
         expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS, TEST_UNIT, TEST_INTEGRATION].join(',')
-        expectedReports = [ [type:HTML, toFile:REPORT_FILE, title:''] ]
+        expectedReports = [ [type:HTML, outputFile:REPORT_FILE, title:''] ]
     }
 
     private loadScriptClass() {

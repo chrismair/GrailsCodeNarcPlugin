@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 the original author or authors.
+ * Copyright 2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,13 @@ private void runCodenarc() {
                 maxPriority3Violations: maxPriority3Violations) {
 
             reports.each { r ->
-                report(type: r.type, toFile: r.name, title: r.title)
+                report(type: r.type) {
+                    r.each { key, value ->
+                        if (key != 'type') {
+                            option(name:key, value:value)
+                        }
+                    }
+                }
             }
             fileset(dir: '.', includes: includes.join(','))
         }
@@ -87,7 +93,6 @@ private static class ReportsDslDelegate {
     List reports = []
     def methodMissing(String name, args) {
         println "Adding report $name"
-        //assert args.size() == 1
         assert args[0] instanceof Closure, "Report name [$name] must be followed by a Closure"
         def reportClosure = args[0]
         def report = new Expando()
@@ -95,7 +100,7 @@ private static class ReportsDslDelegate {
         reportClosure.resolveStrategy = Closure.DELEGATE_FIRST
         reportClosure.call()
         assert report.type, "The report definition for [$name] must specify the report 'type' property"
-        reports << [name:report.name, type:report.type, title:report.title]
+        reports << report.properties
     }
 }
 
@@ -113,7 +118,7 @@ private List getConfiguredReports(config) {
     String reportName = config.reportName ?: 'CodeNarcReport.html'
     String reportType = config.reportType ?: 'html'
     String reportTitle = config.reportTitle ?: ''
-    def reports = [[name:reportName, type:reportType, title:reportTitle]]
+    def reports = [[outputFile:reportName, type:reportType, title:reportTitle]]
     return reports
 }
 
