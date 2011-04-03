@@ -120,8 +120,7 @@ class CodenarcScriptTests extends AbstractTestCase {
 
     void testRun_ReportsClosure_OneReport() {
         final REPORTS = {
-            MyXmlReport {
-                type = 'xml'
+            MyXmlReport('xml') {
                 outputFile = 'RRR'
                 title = 'TTT'
             }
@@ -130,26 +129,34 @@ class CodenarcScriptTests extends AbstractTestCase {
         testRun([reports:REPORTS])
     }
 
+    void testRun_ReportsClosure_ReportWriterClass() {
+        final REPORTS = {
+            MyXmlReport(org.codenarc.report.XmlReportWriter) {
+                outputFile = 'RRR'
+                title = 'TTT'
+            }
+        }
+        expectedReports = [ [type:'org.codenarc.report.XmlReportWriter', outputFile:'RRR', title:'TTT'] ]
+        testRun([reports:REPORTS])
+    }
+
     void testRun_ReportsClosure_TwoReports() {
         final REPORTS = {
-            MyConsoleReport {
-                type = 'console'
+            MyConsoleReport('console') {
                 title = 'CCC'
             }
-            MyXmlReport {
-                type = 'xml'
+            MyOtherReport('html') {
                 title = 'TTT'
                 writeToStandardOut = true
             }
         }
-        expectedReports = [ [type:'console', title:'CCC'], [type:'xml', title:'TTT', writeToStandardOut:true] ]
+        expectedReports = [ [type:'console', title:'CCC'], [type:'html', title:'TTT', writeToStandardOut:true] ]
         testRun([reports:REPORTS])
     }
 
     void testRun_ReportsClosure_OverridesReportProperties() {
         final REPORTS = {
-            MyXmlReport {
-                type = 'xml'
+            MyXmlReport('xml') {
                 outputFile = 'RRR'
                 title = 'TTT'
             }
@@ -175,7 +182,7 @@ class CodenarcScriptTests extends AbstractTestCase {
 
     void testRun_ReportNotAClosure_ThrowsException() {
         final REPORTS = {
-            MyReport(type:'xml')
+            MyReport('xml', 123)
         }
         shouldFailWithMessageContaining('MyReport') { testRun([reports:REPORTS]) }
     }

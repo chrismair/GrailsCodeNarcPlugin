@@ -73,8 +73,8 @@ private void runCodenarc() {
         }
     }
 
-    def reportNames = reports*.name
-	println "CodeNarc finished; report generated: $reportNames"
+    def reportNames = reports.collect { report -> report.outputFile ?: report.type }
+	println "CodeNarc finished; report(s) generated: $reportNames"
 }
 
 private ConfigObject loadConfig() {
@@ -93,13 +93,16 @@ private static class ReportsDslDelegate {
     List reports = []
     def methodMissing(String name, args) {
         println "Adding report $name"
-        assert args[0] instanceof Closure, "Report name [$name] must be followed by a Closure"
-        def reportClosure = args[0]
+        assert args.size() == 2,  "Report name [$name] must specify two parameters: a report type(String or Class) and a Closure"
+        assert args[0] instanceof String || args[0] instanceof Class, "Report name [$name] must specify a String or Class report type"
+        assert args[0], "The report definition for [$name] must specify the report type that is not empty or null"
+        assert args[1] instanceof Closure, "Report name [$name] must be followed by a Closure"
+        def reportClosure = args[1]
         def report = new Expando()
+        report.type = args[0] instanceof String ? args[0] : args[0].name
         reportClosure.delegate = report
         reportClosure.resolveStrategy = Closure.DELEGATE_FIRST
         reportClosure.call()
-        assert report.type, "The report definition for [$name] must specify the report 'type' property"
         reports << report.properties
     }
 }
@@ -114,12 +117,14 @@ private List getConfiguredReports(config) {
         closure.call()
         return delegate.reports
     }
+    return getOldStyleReportDefinitionsOrElseDefaults(config)
+}
 
+private List getOldStyleReportDefinitionsOrElseDefaults(config) {
     String reportName = config.reportName ?: 'CodeNarcReport.html'
     String reportType = config.reportType ?: 'html'
     String reportTitle = config.reportTitle ?: ''
-    def reports = [[outputFile:reportName, type:reportType, title:reportTitle]]
-    return reports
+    return [[outputFile:reportName, type:reportType, title:reportTitle]]
 }
 
 private void configureCodeNarcPropertiesFile(ConfigObject config) {
