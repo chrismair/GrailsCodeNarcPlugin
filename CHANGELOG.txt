@@ -2,10 +2,24 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
-Changes in version 0.12 (?? Mar 2011)
+Changes in version 0.12 (03 Apr 2011)
 --------------------------------------
-- Fix #2954: Provide error message on failure instead of throwing BuildException.
+- Fix #11: Allow CodeNarc rules to be applied to GSP files: http://jira.grails.org/browse/GPCODENARC-11.
+  Add support in "config.groovy" for: codenarc.processViews = true
+- Feature #7: Generate Multiple Reports: http://jira.grails.org/browse/GPCODENARC-7. e.g.
+        codenarc.reports = {
+            CodeNarcXmlReport('xml') {
+                outputFile = 'CodeNarc-Report.xml'
+                title = 'Sample Report'
+            }
+            CodeNarcHtmlReport('html') {
+                outputFile = 'CodeNarc-Report.html'
+                title = 'Sample Report'
+            }
+        }
+- Fix #9: Provide error message on failure instead of throwing BuildException: http://jira.grails.org/browse/GPCODENARC-9
   Add support for systemExitOnBuildException configuration option; defaults to true.
+
 
 Changes in version 0.11 (11 Mar 2011)
 --------------------------------------
