@@ -30,6 +30,7 @@ class CodenarcScriptTests extends AbstractTestCase {
     private static final MAX = Integer.MAX_VALUE
     private static final REPORT_FILE = 'CodeNarcReport.html'
     private static final FILESET_DIR = '.'
+
     private static final SRC_GROOVY = 'src/groovy/**/*.groovy'
     private static final CONTROLLERS = 'grails-app/controllers/**/*.groovy'
     private static final DOMAIN = 'grails-app/domain/**/*.groovy'
@@ -38,6 +39,9 @@ class CodenarcScriptTests extends AbstractTestCase {
     private static final UTILS = 'grails-app/utils/**/*.groovy'
     private static final TEST_UNIT = 'test/unit/**/*.groovy'
     private static final TEST_INTEGRATION = 'test/integration/**/*.groovy'
+    private static final VIEWS = 'grails-app/views/**/*.gsp'
+    private static final DEFAULT_INCLUDES = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS, TEST_UNIT, TEST_INTEGRATION]
+
     private static final HTML = 'html'
     private static final PROPERTIES_FILE_PROP = "codenarc.properties.file"
     private static final BUILD_EXCEPTION = new BuildException('Test BuildException')
@@ -91,13 +95,13 @@ class CodenarcScriptTests extends AbstractTestCase {
     }
 
     void testRun_TurnOffSomeDefaultIncludes() {
-        expectedFilesetIncludes = [SERVICES, TAGLIB, UTILS, TEST_INTEGRATION].join(',')
+        expectedFilesetIncludes = [SERVICES, TAGLIB, UTILS, TEST_INTEGRATION]
         def codeNarcConfig = [processDomain:false, processSrcGroovy:false, processControllers:false, processTestUnit:false]
         testRun(codeNarcConfig)
     }
 
     void testRun_TurnOffOtherDefaultIncludes() {
-        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT].join(',')
+        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT]
         def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false]
         testRun(codeNarcConfig)
     }
@@ -109,9 +113,15 @@ class CodenarcScriptTests extends AbstractTestCase {
         testRun(codeNarcConfig)
     }
 
+    void testRun_IncludeViews() {
+        expectedFilesetIncludes = DEFAULT_INCLUDES + [VIEWS]
+        def codeNarcConfig = [processViews:true]
+        testRun(codeNarcConfig)
+    }
+
     void testRun_ExtraIncludeDirs() {
         final EXTRA = ['abc', 'def/ghi']
-        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT, 'abc/**/*.groovy', 'def/ghi/**/*.groovy'].join(',')
+        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT, 'abc/**/*.groovy', 'def/ghi/**/*.groovy']
         def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false, extraIncludeDirs:EXTRA]
         testRun(codeNarcConfig)
     }
@@ -242,9 +252,7 @@ class CodenarcScriptTests extends AbstractTestCase {
                     options << [(map.name):(map.value)]}])
 
                 codeNarcAntTask.demand.report { reportProps, reportClosure ->
-                    println "report properties=$reportProps"
                     assert reportProps == [type:expectedReport.type]
-
                     reportClosure.delegate = optionDelegate
                     reportClosure.resolveStrategy = Closure.DELEGATE_FIRST
                     reportClosure()
@@ -253,7 +261,7 @@ class CodenarcScriptTests extends AbstractTestCase {
             }
             codeNarcAntTask.demand.fileset { args ->
                 println "fileset properties=$args"
-                assert args == [dir:FILESET_DIR, includes:expectedFilesetIncludes]
+                assert args == [dir:FILESET_DIR, includes:expectedFilesetIncludes.join(',')]
             }
 
             def codeNarcAntTaskProxy = codeNarcAntTask.proxyInstance()
@@ -324,7 +332,7 @@ class CodenarcScriptTests extends AbstractTestCase {
         expectedMaxPriority1Violations = MAX
         expectedMaxPriority2Violations = MAX
         expectedMaxPriority3Violations = MAX
-        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS, TEST_UNIT, TEST_INTEGRATION].join(',')
+        expectedFilesetIncludes = DEFAULT_INCLUDES
         expectedReports = [ [type:HTML, outputFile:REPORT_FILE, title:''] ]
     }
 

@@ -140,9 +140,9 @@ private int getConfigInt(config, String name, int defaultIfMissing) {
 	return value instanceof Integer ? value : defaultIfMissing
 }
 
-private boolean getConfigBoolean(config, String name) {
+private boolean getConfigBoolean(config, String name, boolean defaultValue = true) {
 	def value = config[name]
-	return value instanceof Boolean ? value : true
+	return value instanceof Boolean ? value : defaultValue
 }
 
 private List configureIncludes(config) {
@@ -178,6 +178,10 @@ private List configureIncludes(config) {
 
     if (getConfigBoolean(config, 'processTestIntegration')) {
         includes << 'test/integration/**/*.groovy'
+    }
+
+    if (getConfigBoolean(config, 'processViews', false)) {
+        includes << 'grails-app/views/**/*.gsp'
     }
 
 	for (includeDir in config.extraIncludeDirs) {
