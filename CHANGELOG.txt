@@ -2,6 +2,11 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.14 (?? Jun 2011)
+--------------------------------------
+- Upgrade to CodeNarc 0.14
+
+
 Changes in version 0.12 (03 Apr 2011)
 --------------------------------------
 - Fix #11: Allow CodeNarc rules to be applied to GSP files: http://jira.grails.org/browse/GPCODENARC-11.
