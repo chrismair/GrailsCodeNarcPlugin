@@ -104,7 +104,7 @@ private getBindingValueOrDefault(String varName, Object defaultValue) {
 }
 
 
-private static class ReportsDslDelegate {
+private class ReportsDslDelegate {
     List reports = []
     def methodMissing(String name, args) {
         println "Adding report $name"
