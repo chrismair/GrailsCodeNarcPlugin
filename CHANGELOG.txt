@@ -2,9 +2,12 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
-Changes in version 0.14 (?? Jun 2011)
+Changes in version 0.14 (02 Jul 2011)
 --------------------------------------
-- Upgrade to CodeNarc 0.14
+- Feature: GPCODENARC-19. Upgrade to CodeNarc 0.14
+- Feature: GPCODENARC-18. Move configuration to “BuildConfig.groovy”. Write out warning message if CodeNarc config still exists in “Config.groovy”.  [Jul 2]
+- Fix http://jira.grails.org/browse/GPCODENARC-13. Including AbcComplexity and CyclomaticComplexity rules in ruleset makes no rules work. Include GMetrics jar as a dependency. [Jun 12]
+- Fix GPCODENARC-14. Exclude CodeNarc Plugin from war builds by default.
 
 
 Changes in version 0.12 (03 Apr 2011)
