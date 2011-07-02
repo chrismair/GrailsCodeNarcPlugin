@@ -18,8 +18,6 @@ import org.apache.tools.ant.BuildException
 
 includeTargets << grailsScript('Compile')
 
-configClassname = 'Config'
-
 target('codenarc': 'Run CodeNarc') {
 	depends(compile)
 
@@ -29,7 +27,10 @@ target('codenarc': 'Run CodeNarc') {
 private void runCodenarc() {
 	ant.taskdef(name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask')
 
-	def config = loadConfig()
+    checkForConfigWithinConfigGroovy()
+
+    def configClassName = getBindingValueOrDefault('configClassname', 'BuildConfig')
+	def config = loadConfig(configClassName)
 
     def reports = getConfiguredReports(config)
 
@@ -77,17 +78,31 @@ private void runCodenarc() {
 	println "CodeNarc finished; report(s) generated: $reportNames"
 }
 
-private ConfigObject loadConfig() {
+private void checkForConfigWithinConfigGroovy() {
+    def className = getBindingValueOrDefault('oldConfigClassname', 'Config')
+    def deprecatedConfig = loadConfig(className)
+    if (deprecatedConfig) {
+        System.err.println "WARNING: CodeNarc configuration within 'Config.groovy' is no longer supported. Please move all CodeNarc configuration into 'BuildConfig.groovy'."
+    }
+}
+
+private ConfigObject loadConfig(String className) {
 	def classLoader = Thread.currentThread().contextClassLoader
 	classLoader.addURL(new File(classesDirPath).toURL())
+
     try {
-        def className = getProperty('configClassname')
         return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)).codenarc
     }
     catch(ClassNotFoundException e) {
         return new ConfigObject()
     }
 }
+
+private getBindingValueOrDefault(String varName, Object defaultValue) {
+    def variables = getBinding().getVariables()
+    return variables.containsKey(varName) ? getProperty(varName) : defaultValue
+}
+
 
 private static class ReportsDslDelegate {
     List reports = []

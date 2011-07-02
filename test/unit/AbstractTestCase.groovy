@@ -36,6 +36,24 @@ abstract class AbstractTestCase extends GroovyTestCase {
         }
     }
 
+    /**
+     * Capture and return the output written to System.err while executing the specified Closure
+     * @param closure - the Closure to execute
+     * @return the System.err contents as a String
+     */
+    protected String captureSystemErr(Closure closure) {
+        def originalSystemErr = System.err
+        def outputStream = new ByteArrayOutputStream()
+        try {
+            System.err = new PrintStream(outputStream)
+            closure()
+        }
+        finally {
+            System.err = originalSystemErr
+        }
+        outputStream.toString()
+    }
+
     protected void log(message) {
         println "${getName()}: $message"
     }

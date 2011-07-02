@@ -75,11 +75,30 @@ class CodenarcScriptTests extends AbstractTestCase {
         assert System.getProperty(PROPERTIES_FILE_PROP) == 'file:dir/xxx.properties' 
     }
 
-    void testRun_NoConfigGroovy() {
+    void testRun_NoBuildConfigGroovy() {
         binding.configClassname = 'NoSuchClass'
         expectCallToConfigSlurper = false
         testRun([:])
     }
+
+    void testRun_NoConfigGroovy() {
+        binding.oldConfigClassName = 'NoSuchClass'
+        expectCallToConfigSlurper = false
+        testRun([:])
+    }
+
+    void testRun_ConfigGroovy_ContainsNoCodeNarcConfig() {
+        testRun([:], [:])
+    }
+
+    void testRun_ConfigGroovy_ContainsCodeNarcConfig() {
+        def sysErrOutput = captureSystemErr {
+            testRun([:], [reportName:'MyCodeNarcReport'])
+        }
+        println "System.err=$sysErrOutput"
+        assert sysErrOutput.contains('Config.groovy')
+    }
+
 
     void testRun_OverrideDefaults() {
         def codeNarcConfig = [
@@ -231,7 +250,7 @@ class CodenarcScriptTests extends AbstractTestCase {
      * @param codeNarcConfig - the Map of configuration elements made available through the
      *      (simulated) "Config.groovy", under the "codenarc" key.
      */
-    private void testRun(Map codeNarcConfig) {
+    private void testRun(Map codeNarcConfig, Map oldCodeNarcConfig=[:]) {
         ant.demand.taskdef { args -> assert args == TASKDEF }
 
         ant.demand.codenarc { props, closure ->
@@ -271,7 +290,7 @@ class CodenarcScriptTests extends AbstractTestCase {
             codeNarcAntTask.verify(codeNarcAntTaskProxy)
         }
 
-        runCodeNarc(codeNarcConfig)
+        runCodeNarc(codeNarcConfig, oldCodeNarcConfig)
     }
 
     private void testRunThrowsException(Map codeNarcConfig, exception) {
@@ -285,8 +304,9 @@ class CodenarcScriptTests extends AbstractTestCase {
         runCodeNarc(codeNarcConfig)
     }
 
-    private void runCodeNarc(Map codeNarcConfig) {
+    private void runCodeNarc(Map codeNarcConfig, Map oldCodeNarcConfig=[:]) {
         def config = [codenarc:codeNarcConfig]
+        def oldConfig = [codenarc:oldCodeNarcConfig]
         def antProxy = ant.proxyInstance()
         binding.setVariable("ant", antProxy)
 
@@ -295,6 +315,11 @@ class CodenarcScriptTests extends AbstractTestCase {
             def mockConfigSlurper = new MockFor(ConfigSlurper)
             def configObject = new ConfigObject()
             configObject.putAll(config)
+
+            def oldConfigObject = new ConfigObject()
+            oldConfigObject.putAll(oldConfig)
+
+            mockConfigSlurper.demand.parse { arg -> oldConfigObject }
             mockConfigSlurper.demand.parse { arg -> configObject }
             mockConfigSlurper.use {
                 codeNarc.run()
