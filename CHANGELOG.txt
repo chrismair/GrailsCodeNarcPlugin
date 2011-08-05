@@ -2,6 +2,12 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.15 (05 Aug 2011)
+--------------------------------------
+- Upgrade to CodeNarc 0.15
+- Fix GPCODENARC-20. Create report outputFile folders if missing. See CodeNarc issue #3380494.
+
+
 Changes in version 0.14 (02 Jul 2011)
 --------------------------------------
 - Feature: GPCODENARC-19. Upgrade to CodeNarc 0.14
