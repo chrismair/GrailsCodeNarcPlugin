@@ -1,0 +1,6 @@
+.settings/
+*.iws
+grails-codenarc-*.zip*
+stacktrace.log
+target/
+web-app/

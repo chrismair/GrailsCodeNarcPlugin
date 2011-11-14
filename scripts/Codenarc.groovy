@@ -16,7 +16,7 @@
 import grails.util.GrailsUtil
 import org.apache.tools.ant.BuildException
 
-includeTargets << grailsScript('Compile')
+includeTargets << grailsScript('_GrailsCompile')
 
 target('codenarc': 'Run CodeNarc') {
 	depends(compile)

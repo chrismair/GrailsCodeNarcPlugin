@@ -15,17 +15,25 @@
  */
 class CodenarcGrailsPlugin {
 
-	String version = '0.15'
+	String version = '0.16.1'
 
-    def grailsVersion = '1.3 > *'
+  	def grailsVersion = '1.3 > *'
 
 	Map dependsOn = [:]
 
+	String license = "APACHE"
 	String author = 'Chris Mair'                            // ORIGINAL: 'Burt Beckwith'
 	String authorEmail = 'chrismair@users.sourceforge.net'  // ORIGINAL: 'burt@burtbeckwith.com'
 	String title = 'CodeNarc plugin'
 	String description = 'Runs CodeNarc static analysis rules for Groovy source.'
 	String documentation = 'http://grails.org/plugin/codenarc'
+
+	List developers = [
+			[name: "Burt Beckwith", email: "burt@burtbeckwith.com"],
+			[name: "Peter Ledbrook", email: "peter@cacoethes.co.uk"] ]
+
+	Map issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPCODENARC" ] 
+	Map scm = [ url: "http://svn.codehaus.org/grails-plugins/grails-codenarc/" ]
 
 	def doWithSpring = {}
 
