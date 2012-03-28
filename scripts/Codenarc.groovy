@@ -37,7 +37,11 @@ private void runCodenarc() {
 	int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)
 	int maxPriority2Violations = getConfigInt(config, 'maxPriority2Violations', Integer.MAX_VALUE)
 	int maxPriority3Violations = getConfigInt(config, 'maxPriority3Violations', Integer.MAX_VALUE)
-	String ruleSetFiles = config.ruleSetFiles ?:
+
+    def ruleSetFiles = config.ruleSetFiles instanceof Collection ?
+        config.ruleSetFiles.join(',') : config.ruleSetFiles
+
+	ruleSetFiles = ruleSetFiles ?:
 		'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
 	List includes = configureIncludes(config)
     boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')

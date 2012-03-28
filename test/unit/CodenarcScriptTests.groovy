@@ -99,6 +99,11 @@ class CodenarcScriptTests extends AbstractTestCase {
         assert sysErrOutput.contains('Config.groovy')
     }
 
+    void testRun_SpecifyRuleSetFilesAsACollection() {
+        def codeNarcConfig = [ruleSetFiles:['FFF', 'rulesets/basic.xml', 'http://myrules.com']]
+        expectedRuleSetFiles = 'FFF,rulesets/basic.xml,http://myrules.com'
+        testRun(codeNarcConfig)
+    }
 
     void testRun_OverrideDefaults() {
         def codeNarcConfig = [

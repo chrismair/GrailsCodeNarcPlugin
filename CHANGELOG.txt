@@ -4,7 +4,9 @@ http://grails.org/plugin/codenarc
 
 Changes in version 0.17 (March 2012)
 --------------------------------------
-- GPCODENARC-31: Upgrade to CodeNarc 0.17.
+- Feature: GPCODENARC-31: Upgrade to CodeNarc 0.17.
+- Feature: GPCODENARC-23. CodeNarc should be able to recognize when ruleSetFiles is a collection: users should not have to add ".join(',').toString()".
+        e.g.   codenarc.ruleSetFiles = ["rulesets/dry.xml", "rulesets/unnecessary.xml"]
 
 
 Changes in version 0.16.1 (14 Nov 2011)
