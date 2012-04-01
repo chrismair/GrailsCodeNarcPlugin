@@ -72,7 +72,37 @@ class CodenarcScriptTests extends AbstractTestCase {
         assert !System.getProperty(PROPERTIES_FILE_PROP)
         def codeNarcConfig = [propertiesFile:'dir/xxx.properties']
         testRun(codeNarcConfig)
-        assert System.getProperty(PROPERTIES_FILE_PROP) == 'file:dir/xxx.properties' 
+        assert System.getProperty(PROPERTIES_FILE_PROP) == 'file:dir/xxx.properties'
+        System.setProperty(PROPERTIES_FILE_PROP, '')
+    }
+
+    void testRun_CodeNarcPropertiesClosure() {
+        final PROPS_FILE_NAME = 'target/CodeNarcTemp.properties'
+        assert !System.getProperty(PROPERTIES_FILE_PROP)
+        final PROPERTIES_CLOSURE = {
+            GrailsPublicControllerMethod.enabled = false
+            EmptyIfStatement.priority = 1
+        }
+        final PROPERTIES = [
+            'GrailsPublicControllerMethod.enabled':'false',
+            'EmptyIfStatement.priority':'1'
+        ] as Properties
+        new File('target').mkdir()
+        testRun([properties:PROPERTIES_CLOSURE])
+
+        assert System.getProperty(PROPERTIES_FILE_PROP) == 'file:' + PROPS_FILE_NAME
+
+        def propertiesFile = new File(PROPS_FILE_NAME)
+        propertiesFile.withInputStream { inputStream ->
+            def properties = new Properties()
+            properties.load(inputStream)
+            println "properties=$properties"
+            assert properties == PROPERTIES
+        }
+    }
+
+    void testRun_CodeNarcPropertiesNotAClosure_ThrowsException() {
+        shouldFailWithMessageContaining('properties') { testRun([properties:123]) }
     }
 
     void testRun_NoBuildConfigGroovy() {

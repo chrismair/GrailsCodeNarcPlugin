@@ -146,11 +146,47 @@ private List getOldStyleReportDefinitionsOrElseDefaults(config) {
     return [[outputFile:reportName, type:reportType, title:reportTitle]]
 }
 
+private class PropertiesDslDelegate {
+    Map ruleValues = [:].withDefault { k -> [:] }
+    Properties getProperties() {
+        def props = [:]
+        ruleValues.each { ruleName, rulePropertiesMap ->
+            rulePropertiesMap.each { propName, propValue ->
+                props[ruleName + '.' + propName] = propValue.toString()
+            }
+        }
+        return props as Properties
+    }
+
+    @Override
+    Object getProperty(String name) {
+        return ruleValues[name]
+    }
+}
+
 private void configureCodeNarcPropertiesFile(ConfigObject config) {
     final PROPERTIES_FILE_PROP = "codenarc.properties.file"
+
     if (config.propertiesFile) {
         def propValue = "file:" + config.propertiesFile
         System.setProperty(PROPERTIES_FILE_PROP, propValue)
+    }
+
+    if (config.properties) {
+        final TEMP_PROPERTIES_FILE = "target/CodeNarcTemp.properties"
+        assert config.properties instanceof Closure, "The properties property value must be a Closure"
+        def closure = config.properties
+        def delegate = new PropertiesDslDelegate()
+        closure.resolveStrategy = Closure.DELEGATE_FIRST
+        closure.delegate = delegate
+        closure.call()
+        def properties = delegate.getProperties()
+
+        System.setProperty(PROPERTIES_FILE_PROP, 'file:' + TEMP_PROPERTIES_FILE)
+        def propertiesFile = new File(TEMP_PROPERTIES_FILE)
+        propertiesFile.withOutputStream { outputStream ->
+            properties.store(outputStream, 'CodeNarc properties')
+        }
     }
 }
 

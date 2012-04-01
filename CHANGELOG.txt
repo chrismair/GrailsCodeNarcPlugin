@@ -2,11 +2,12 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
-Changes in version 0.17 (March 2012)
+Changes in version 0.17 (April 2012)
 --------------------------------------
 - GPCODENARC-31: Upgrade to CodeNarc 0.17.
 - GPCODENARC-23. Allow ruleSetFiles to be a collection/list; e.g.   codenarc.ruleSetFiles = ["rulesets/dry.xml", "rulesets/unnecessary.xml"]
 - GPCODENARC-24: Create default report output file in "target" folder ("target/CodeNarcReport.html"); only used if no reports are explicitly defined.
+- GPCODENARC-30. Support codenarc.properties = { GrailsPublicControllerMethod.enabled = false } in "BuildConfig.groovy"
 
 
 Changes in version 0.16.1 (14 Nov 2011)
