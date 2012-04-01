@@ -28,7 +28,7 @@ class CodenarcScriptTests extends AbstractTestCase {
     private static final TASKDEF = [name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask']
     private static final RULESET_FILES = 'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
     private static final MAX = Integer.MAX_VALUE
-    private static final REPORT_FILE = 'CodeNarcReport.html'
+    private static final REPORT_FILE = 'target/CodeNarcReport.html'
     private static final FILESET_DIR = '.'
 
     private static final SRC_GROOVY = 'src/groovy/**/*.groovy'
