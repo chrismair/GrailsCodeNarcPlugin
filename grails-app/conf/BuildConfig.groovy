@@ -6,17 +6,18 @@ grails.project.dependency.resolution = {
 	inherits "global"
 	log "warn" 
 	repositories {
+		grailsCentral()
 		mavenCentral()
 	}
 
 	dependencies {
-		provided "org.codenarc:CodeNarc:0.17", {
+		compile "org.codenarc:CodeNarc:0.17", {
 			excludes "log4j", "groovy-all", "ant"
 		}
 	}
 
 	plugins {
-		build ":release:1.0.0.RC3", {
+		build ":release:2.2.0", {
 			export = false
 		}
 	}

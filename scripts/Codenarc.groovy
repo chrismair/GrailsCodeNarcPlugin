@@ -108,7 +108,7 @@ private getBindingValueOrDefault(String varName, Object defaultValue) {
 }
 
 
-private class ReportsDslDelegate {
+class ReportsDslDelegate {
     List reports = []
     def methodMissing(String name, args) {
         println "Adding report $name"
@@ -146,7 +146,7 @@ private List getOldStyleReportDefinitionsOrElseDefaults(config) {
     return [[outputFile:reportName, type:reportType, title:reportTitle]]
 }
 
-private class PropertiesDslDelegate {
+class PropertiesDslDelegate {
     Map ruleValues = [:].withDefault { k -> [:] }
     Properties getProperties() {
         def props = [:]
