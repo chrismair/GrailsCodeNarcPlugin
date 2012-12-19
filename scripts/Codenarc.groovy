@@ -95,7 +95,10 @@ private ConfigObject loadConfig(String className) {
 	classLoader.addURL(new File(classesDirPath).toURL())
 
     try {
-        return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)).codenarc
+        // Allow stubbing out in tests
+        def parser = getBindingValueOrDefault('configParser', { name -> return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)) })
+        return parser(className).codenarc
+//        return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)).codenarc
     }
     catch(ClassNotFoundException e) {
         return new ConfigObject()
@@ -174,7 +177,7 @@ private void configureCodeNarcPropertiesFile(ConfigObject config) {
 
     if (config.properties) {
         final TEMP_PROPERTIES_FILE = "target/CodeNarcTemp.properties"
-        assert config.properties instanceof Closure, "The properties property value must be a Closure"
+        assert config.properties instanceof Closure, 'The properties property value must be a Closure'
         def closure = config.properties
         def delegate = new PropertiesDslDelegate()
         closure.resolveStrategy = Closure.DELEGATE_FIRST

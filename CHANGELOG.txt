@@ -4,6 +4,9 @@ http://grails.org/plugin/codenarc
 
 Changes in version 0.18 (Dec 2012)
 --------------------------------------
+- GPCODENARC-33: Upgraded to Grails 2.2-RC: 'ReportsDslDelegate' has an incorrect modifier private.
+- Migrated to new Grails Plugin Repository
+- Moved source to GitHub: https://github.com/chrismair/GrailsCodeNarcPlugin.git
 
 
 Changes in version 0.17 (April 2012)

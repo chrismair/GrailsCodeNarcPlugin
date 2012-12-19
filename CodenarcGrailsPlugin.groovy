@@ -15,7 +15,7 @@
  */
 class CodenarcGrailsPlugin {
 
-	String version = '0.18-SNAPSHOT'
+	String version = '0.18'
 
   	def grailsVersion = '1.3 > *'
 

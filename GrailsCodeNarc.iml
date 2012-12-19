@@ -36,7 +36,6 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="library" name="grails-1.3.6" level="application" />
     <orderEntry type="module-library" exported="">
       <library name="Grails User Library (GrailsCodeNarc-GitHub)">
         <CLASSES>
@@ -80,6 +79,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="GrailsCodeNarc-grailsPlugins" />
+    <orderEntry type="library" name="grails-2.1.2" level="application" />
   </component>
 </module>
 

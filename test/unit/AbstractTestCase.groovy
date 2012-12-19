@@ -18,7 +18,6 @@
  * Abstract superclass for test classes.
  *
  * @author Chris Mair
- * @version $Revision: $ - $Date:  $
  */
 abstract class AbstractTestCase extends GroovyTestCase {
 
@@ -29,7 +28,7 @@ abstract class AbstractTestCase extends GroovyTestCase {
      */
     protected void shouldFailWithMessageContaining(text, Closure closure) {
         def message = shouldFail(closure)
-        log("exception message=[$message]")
+        println "exception message=[$message]"
         def strings = text instanceof List ? text : [text]
         strings.each { string ->
             assert message.contains(string), "[$message] does not contain [$string]"
@@ -53,25 +52,5 @@ abstract class AbstractTestCase extends GroovyTestCase {
         }
         outputStream.toString()
     }
-
-    protected void log(message) {
-        println "${getName()}: $message"
-    }
-
-    private String classNameNoPackage() {
-        def className = getClass().name
-        def index = className.lastIndexOf('.')
-        (index > -1) ? className.substring(index+1) : className
-    }
-
-    //------------------------------------------------------------------------------------
-    // Test Setup and Tear Down
-    //------------------------------------------------------------------------------------
-
-//    void setUp() {
-//        log "----------[ ${classNameNoPackage()}.${getName()} ]----------"
-//        super.setUp()
-//    }
-
 
 }
