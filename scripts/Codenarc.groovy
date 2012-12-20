@@ -187,6 +187,7 @@ private void configureCodeNarcPropertiesFile(ConfigObject config) {
 
         System.setProperty(PROPERTIES_FILE_PROP, 'file:' + TEMP_PROPERTIES_FILE)
         def propertiesFile = new File(TEMP_PROPERTIES_FILE)
+        propertiesFile.getParentFile().mkdirs()
         propertiesFile.withOutputStream { outputStream ->
             properties.store(outputStream, 'CodeNarc properties')
         }
