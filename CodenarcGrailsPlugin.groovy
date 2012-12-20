@@ -33,7 +33,7 @@ class CodenarcGrailsPlugin {
 			[name: "Peter Ledbrook", email: "peter@cacoethes.co.uk"] ]
 
 	Map issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPCODENARC" ] 
-	Map scm = [ url: "http://svn.codehaus.org/grails-plugins/grails-codenarc/" ]
+	Map scm = [ url: "https://github.com/chrismair/GrailsCodeNarcPlugin" ]
 
 	def doWithSpring = {}
 
