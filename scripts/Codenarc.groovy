@@ -27,8 +27,6 @@ target('codenarc': 'Run CodeNarc') {
 private void runCodenarc() {
 	ant.taskdef(name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask')
 
-    checkForConfigWithinConfigGroovy()
-
     def configClassName = getBindingValueOrDefault('configClassname', 'BuildConfig')
 	def config = loadConfig(configClassName)
 
@@ -80,14 +78,6 @@ private void runCodenarc() {
 
     def reportNames = reports.collect { report -> report.outputFile ?: report.type }
 	println "CodeNarc finished; report(s) generated: $reportNames"
-}
-
-private void checkForConfigWithinConfigGroovy() {
-    def className = getBindingValueOrDefault('oldConfigClassname', 'Config')
-    def deprecatedConfig = loadConfig(className)
-    if (deprecatedConfig) {
-        System.err.println "WARNING: CodeNarc configuration within 'Config.groovy' is no longer supported. Please move all CodeNarc configuration into 'BuildConfig.groovy'."
-    }
 }
 
 private ConfigObject loadConfig(String className) {

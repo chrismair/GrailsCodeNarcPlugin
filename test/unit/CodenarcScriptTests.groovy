@@ -115,18 +115,6 @@ class CodenarcScriptTests extends AbstractTestCase {
         testRun([:])
     }
 
-    void testRun_ConfigGroovy_ContainsNoCodeNarcConfig() {
-        testRun([:], [:])
-    }
-
-    void testRun_ConfigGroovy_ContainsCodeNarcConfig() {
-        def sysErrOutput = captureSystemErr {
-            testRun([:], [reportName:'MyCodeNarcReport'])
-        }
-        println "System.err=$sysErrOutput"
-        assert sysErrOutput.contains('Config.groovy')
-    }
-
     void testRun_SpecifyRuleSetFilesAsACollection() {
         def codeNarcConfig = [ruleSetFiles:['FFF', 'rulesets/basic.xml', 'http://myrules.com']]
         expectedRuleSetFiles = 'FFF,rulesets/basic.xml,http://myrules.com'
@@ -277,14 +265,14 @@ class CodenarcScriptTests extends AbstractTestCase {
 
     /**
      * Perform a test of the Codenarc.groovy script. Populate the test-specific application configuration
-     * (simulating "Config.groovy") with the specified config Map. Execute the script, mocking out the
+     * (simulating "BuildConfig.groovy") with the specified config Map. Execute the script, mocking out the
      * Ant/Gant infrastructure and script dependencies. Compare the parameters passed to the CodeNarc
      * ant task with the "expected" variables set up for this test.
      *
      * @param codeNarcConfig - the Map of configuration elements made available through the
-     *      (simulated) "Config.groovy", under the "codenarc" key.
+     *      (simulated) "BuildConfig.groovy", under the "codenarc" key.
      */
-    private void testRun(Map codeNarcConfig, Map oldCodeNarcConfig=[:]) {
+    private void testRun(Map codeNarcConfig) {
         ant.demand.taskdef { args -> assert args == TASKDEF }
 
         ant.demand.codenarc { props, closure ->
@@ -324,7 +312,7 @@ class CodenarcScriptTests extends AbstractTestCase {
             codeNarcAntTask.verify(codeNarcAntTaskProxy)
         }
 
-        runCodeNarc(codeNarcConfig, oldCodeNarcConfig)
+        runCodeNarc(codeNarcConfig)
     }
 
     private void testRunThrowsException(Map codeNarcConfig, exception) {
@@ -338,9 +326,8 @@ class CodenarcScriptTests extends AbstractTestCase {
         runCodeNarc(codeNarcConfig)
     }
 
-    private void runCodeNarc(Map codeNarcConfig, Map oldCodeNarcConfig=[:]) {
+    private void runCodeNarc(Map codeNarcConfig) {
         def config = [codenarc:codeNarcConfig]
-        def oldConfig = [codenarc:oldCodeNarcConfig]
         def antProxy = ant.proxyInstance()
         binding.setVariable("ant", antProxy)
 
@@ -348,11 +335,8 @@ class CodenarcScriptTests extends AbstractTestCase {
             def configObject = new ConfigObject()
             configObject.putAll(config)
 
-            def oldConfigObject = new ConfigObject()
-            oldConfigObject.putAll(oldConfig)
-
           // Stub out the call to parse the actual BuildConfig.groovy
-          def configObjects = [configObject, oldConfigObject]
+          def configObjects = [configObject]
           binding.configParser = { className -> configObjects.pop()  }
 
           codeNarc.run()
