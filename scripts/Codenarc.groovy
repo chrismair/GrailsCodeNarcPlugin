@@ -19,37 +19,37 @@ import org.apache.tools.ant.BuildException
 includeTargets << grailsScript('_GrailsCompile')
 
 target('codenarc': 'Run CodeNarc') {
-	depends(compile)
+	   depends(compile)
 
-	runCodenarc()
+	   runCodenarc()
 }
 
 private void runCodenarc() {
-	ant.taskdef(name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask')
+	   ant.taskdef(name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask')
 
-    def configClassName = getBindingValueOrDefault('configClassname', 'BuildConfig')
-	def config = loadConfig(configClassName)
+     def configClassName = getBindingValueOrDefault('configClassname', 'BuildConfig')
+	   def config = loadConfig(configClassName)
 
-    def reports = getConfiguredReports(config)
+     def reports = getConfiguredReports(config)
 
-	int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)
-	int maxPriority2Violations = getConfigInt(config, 'maxPriority2Violations', Integer.MAX_VALUE)
-	int maxPriority3Violations = getConfigInt(config, 'maxPriority3Violations', Integer.MAX_VALUE)
+	   int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)
+	   int maxPriority2Violations = getConfigInt(config, 'maxPriority2Violations', Integer.MAX_VALUE)
+	   int maxPriority3Violations = getConfigInt(config, 'maxPriority3Violations', Integer.MAX_VALUE)
 
-    def ruleSetFiles = config.ruleSetFiles instanceof Collection ?
-        config.ruleSetFiles.join(',') : config.ruleSetFiles
+     def ruleSetFiles = config.ruleSetFiles instanceof Collection ?
+         config.ruleSetFiles.join(',') : config.ruleSetFiles
 
-	ruleSetFiles = ruleSetFiles ?:
-		'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
-	List includes = configureIncludes(config)
-    boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
+	   ruleSetFiles = ruleSetFiles ?:
+		     'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
+	   List includes = configureIncludes(config)
+     boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
 
-    configureCodeNarcPropertiesFile(config)
+     configureCodeNarcPropertiesFile(config)
 
-	println "Running CodeNarc ..."
+	   println "Running CodeNarc ..."
 
-    try {
-        ant.codenarc(ruleSetFiles: ruleSetFiles,
+     try {
+         ant.codenarc(ruleSetFiles: ruleSetFiles,
                 maxPriority1Violations: maxPriority1Violations,
                 maxPriority2Violations: maxPriority2Violations,
                 maxPriority3Violations: maxPriority3Violations) {
@@ -64,7 +64,7 @@ private void runCodenarc() {
                 }
             }
             fileset(dir: '.', includes: includes.join(','))
-        }
+         }
     }
     catch(BuildException e) {
         if (systemExitOnBuildException) {
@@ -77,17 +77,17 @@ private void runCodenarc() {
     }
 
     def reportNames = reports.collect { report -> report.outputFile ?: report.type }
-	println "CodeNarc finished; report(s) generated: $reportNames"
+	  println "CodeNarc finished; report(s) generated: $reportNames"
 }
 
 private ConfigObject loadConfig(String className) {
-	def classLoader = Thread.currentThread().contextClassLoader
-	classLoader.addURL(new File(classesDirPath).toURL())
+    def classLoader = Thread.currentThread().contextClassLoader
+	  classLoader.addURL(new File(classesDirPath).toURL())
 
     try {
-        // Allow stubbing out in tests
-        def parser = getBindingValueOrDefault('configParser', { name -> return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)) })
-        return parser(className).codenarc
+         // Allow stubbing out in tests
+         def parser = getBindingValueOrDefault('configParser', { name -> return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)) })
+         return parser(className).codenarc
 //        return new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass(className)).codenarc
     }
     catch(ClassNotFoundException e) {
@@ -185,45 +185,45 @@ private void configureCodeNarcPropertiesFile(ConfigObject config) {
 }
 
 private int getConfigInt(config, String name, int defaultIfMissing) {
-	def value = config[name]
-	return value instanceof Integer ? value : defaultIfMissing
+	   def value = config[name]
+	   return value instanceof Integer ? value : defaultIfMissing
 }
 
 private boolean getConfigBoolean(config, String name, boolean defaultValue = true) {
-	def value = config[name]
-	return value instanceof Boolean ? value : defaultValue
+	   def value = config[name]
+	   return value instanceof Boolean ? value : defaultValue
 }
 
 private List configureIncludes(config) {
-	List includes = []
+     List includes = []
 
-	if (getConfigBoolean(config, 'processSrcGroovy')) {
-		includes << 'src/groovy/**/*.groovy'
-	}
+     if (getConfigBoolean(config, 'processSrcGroovy')) {
+  	     includes << 'src/groovy/**/*.groovy'
+     }
 
-	if (getConfigBoolean(config, 'processControllers')) {
-		includes << 'grails-app/controllers/**/*.groovy'
-	}
+     if (getConfigBoolean(config, 'processControllers')) {
+  	     includes << 'grails-app/controllers/**/*.groovy'
+     }
 
-	if (getConfigBoolean(config, 'processDomain')) {
-		includes << 'grails-app/domain/**/*.groovy'
-	}
+     if (getConfigBoolean(config, 'processDomain')) {
+         includes << 'grails-app/domain/**/*.groovy'
+     }
 
-	if (getConfigBoolean(config, 'processServices')) {
-		includes << 'grails-app/services/**/*.groovy'
-	}
+     if (getConfigBoolean(config, 'processServices')) {
+  	     includes << 'grails-app/services/**/*.groovy'
+     }
 
-	if (getConfigBoolean(config, 'processTaglib')) {
-		includes << 'grails-app/taglib/**/*.groovy'
-	}
+     if (getConfigBoolean(config, 'processTaglib')) {
+  	     includes << 'grails-app/taglib/**/*.groovy'
+     }
 
-	if (getConfigBoolean(config, 'processUtils')) {
-		includes << 'grails-app/utils/**/*.groovy'
-	}
+     if (getConfigBoolean(config, 'processUtils')) {
+		     includes << 'grails-app/utils/**/*.groovy'
+     }
 
-    if (getConfigBoolean(config, 'processTestUnit')) {
-        includes << 'test/unit/**/*.groovy'
-    }
+     if (getConfigBoolean(config, 'processTestUnit')) {
+         includes << 'test/unit/**/*.groovy'
+     }
 
     if (getConfigBoolean(config, 'processTestIntegration')) {
         includes << 'test/integration/**/*.groovy'
@@ -233,11 +233,11 @@ private List configureIncludes(config) {
         includes << 'grails-app/views/**/*.gsp'
     }
 
-	for (includeDir in config.extraIncludeDirs) {
-		includes << "$includeDir/**/*.groovy"
-	}
+    for (includeDir in config.extraIncludeDirs) {
+        includes << "$includeDir/**/*.groovy"
+    }
 
-	return includes
+    return includes
 }
 
 try {

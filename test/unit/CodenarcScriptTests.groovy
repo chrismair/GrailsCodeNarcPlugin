@@ -109,12 +109,6 @@ class CodenarcScriptTests extends AbstractTestCase {
         testRun([:])
     }
 
-    void testRun_NoConfigGroovy() {
-        binding.oldConfigClassName = 'NoSuchClass'
-        expectCallToConfigSlurper = false
-        testRun([:])
-    }
-
     void testRun_SpecifyRuleSetFilesAsACollection() {
         def codeNarcConfig = [ruleSetFiles:['FFF', 'rulesets/basic.xml', 'http://myrules.com']]
         expectedRuleSetFiles = 'FFF,rulesets/basic.xml,http://myrules.com'
@@ -278,9 +272,9 @@ class CodenarcScriptTests extends AbstractTestCase {
         ant.demand.codenarc { props, closure ->
             println "codenarc ant task properties=$props"
             assert props.ruleSetFiles == expectedRuleSetFiles
-			assert props.maxPriority1Violations == expectedMaxPriority1Violations
-			assert props.maxPriority2Violations == expectedMaxPriority2Violations
-			assert props.maxPriority3Violations == expectedMaxPriority3Violations
+			      assert props.maxPriority1Violations == expectedMaxPriority1Violations
+			      assert props.maxPriority2Violations == expectedMaxPriority2Violations
+			      assert props.maxPriority3Violations == expectedMaxPriority3Violations
 
             expectedReports.each { expectedReport ->
                 def otherProperties = new HashMap(expectedReport)
