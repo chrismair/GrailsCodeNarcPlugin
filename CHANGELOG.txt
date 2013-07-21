@@ -5,7 +5,7 @@ http://grails.org/plugin/codenarc
 Changes in version 0.19 (Jul 2013)
 --------------------------------------
 - Remove check for (obsolete) CodeNarc config in Config.groovy
-- TODO Upgrade to CodeNarc 0.19
+- Upgrade to CodeNarc 0.19
 
 
 Changes in version 0.18.1 (Feb 2013)
