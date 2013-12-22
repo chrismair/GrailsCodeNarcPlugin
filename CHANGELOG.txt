@@ -2,6 +2,11 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.20 (Dec 2013)
+--------------------------------------
+- Upgrade to CodeNarc 0.20
+
+
 Changes in version 0.19 (Jul 2013)
 --------------------------------------
 - Remove check for (obsolete) CodeNarc config in Config.groovy

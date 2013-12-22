@@ -11,7 +11,7 @@ grails.project.dependency.resolution = {
 	}
 
 	dependencies {
-		compile "org.codenarc:CodeNarc:0.19", {
+		compile "org.codenarc:CodeNarc:0.20", {
 			excludes "log4j", "groovy-all", "ant"
 		}
 	}
