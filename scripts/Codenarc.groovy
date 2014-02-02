@@ -42,6 +42,7 @@ private void runCodenarc() {
 	   ruleSetFiles = ruleSetFiles ?:
 		     'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
 	   List includes = configureIncludes(config)
+	   List excludes = configureExcludes(config)
      boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
 
      configureCodeNarcPropertiesFile(config)
@@ -63,7 +64,7 @@ private void runCodenarc() {
                     }
                 }
             }
-            fileset(dir: '.', includes: includes.join(','))
+            fileset(dir: '.', includes: includes.join(','), excludes: excludes.join(','))
          }
     }
     catch(BuildException e) {
@@ -238,6 +239,16 @@ private List configureIncludes(config) {
     }
 
     return includes
+}
+
+private List configureExcludes(config) {
+	List excludes = []
+
+	for (exclude in config.excludes) {
+		excludes << exclude
+	}
+
+	return excludes
 }
 
 try {
