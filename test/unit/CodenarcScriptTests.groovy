@@ -39,6 +39,7 @@ class CodenarcScriptTests extends AbstractTestCase {
     private static final TEST_INTEGRATION = 'test/integration/**/*.groovy'
     private static final VIEWS = 'grails-app/views/**/*.gsp'
     private static final DEFAULT_INCLUDES = [SRC_GROOVY, CONTROLLERS, DOMAIN, SERVICES, TAGLIB, UTILS, TEST_UNIT, TEST_INTEGRATION]
+    private static final DEFAULT_EXCLUDES = []
 
     private static final HTML = 'html'
     private static final PROPERTIES_FILE_PROP = "codenarc.properties.file"
@@ -56,6 +57,7 @@ class CodenarcScriptTests extends AbstractTestCase {
     private expectedMaxPriority3Violations
     private expectedReports
     private expectedFilesetIncludes
+    private expectedFilesetExcludes
     private expectCallToConfigSlurper = true
 
     //-------------------------------------------------------------------------
@@ -158,6 +160,14 @@ class CodenarcScriptTests extends AbstractTestCase {
         final EXTRA = ['abc', 'def/ghi']
         expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT, 'abc/**/*.groovy', 'def/ghi/**/*.groovy']
         def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false, extraIncludeDirs:EXTRA]
+        testRun(codeNarcConfig)
+    }
+    
+    void testRun_Excludes() {
+        final EXCLUDES = ['**/abc*.groovy', '**/def*.groovy']
+        expectedFilesetExcludes = ['**/abc*.groovy', '**/def*.groovy']
+        expectedFilesetIncludes = DEFAULT_INCLUDES
+        def codeNarcConfig = [excludes:EXCLUDES]
         testRun(codeNarcConfig)
     }
 
@@ -297,7 +307,7 @@ class CodenarcScriptTests extends AbstractTestCase {
             }
             codeNarcAntTask.demand.fileset { args ->
                 println "fileset properties=$args"
-                assert args == [dir:FILESET_DIR, includes:expectedFilesetIncludes.join(',')]
+                assert args == [dir:FILESET_DIR, includes:expectedFilesetIncludes.join(','), excludes:expectedFilesetExcludes.join(',')]
             }
 
             def codeNarcAntTaskProxy = codeNarcAntTask.proxyInstance()
@@ -369,6 +379,7 @@ class CodenarcScriptTests extends AbstractTestCase {
         expectedMaxPriority2Violations = MAX
         expectedMaxPriority3Violations = MAX
         expectedFilesetIncludes = DEFAULT_INCLUDES
+        expectedFilesetExcludes = DEFAULT_EXCLUDES
         expectedReports = [ [type:HTML, outputFile:REPORT_FILE, title:''] ]
     }
 
