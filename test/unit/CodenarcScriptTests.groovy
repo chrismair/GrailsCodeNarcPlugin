@@ -67,6 +67,7 @@ class CodenarcScriptTests extends AbstractTestCase {
     }
 
     void testRun_CustomCodeNarcPropertiesFile() {
+        System.setProperty(PROPERTIES_FILE_PROP, '')
         assert !System.getProperty(PROPERTIES_FILE_PROP)
         def codeNarcConfig = [propertiesFile:'dir/xxx.properties']
         testRun(codeNarcConfig)
