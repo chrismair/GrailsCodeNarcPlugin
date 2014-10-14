@@ -2,7 +2,14 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
-Changes in version 0.21 (Apr 2013)
+Changes in version 0.22 (Sep 2014)
+--------------------------------------
+- Pull request #4: Upgrade to CodeNarc 0.22. (Thanks to Stefan Schöffmann)
+- GPCODENARC-32: Support using custom CodeNarc rule scripts defined within the Grails project.
+    Set "codenarc.useCurrentThreadContextClassLoader" system property to "true".
+
+
+Changes in version 0.21 (Apr 2014)
 --------------------------------------
 - Upgrade to CodeNarc 0.21
 - Pull request #3: Add support for 'excludes' property. (Thanks to Yuki Takei)

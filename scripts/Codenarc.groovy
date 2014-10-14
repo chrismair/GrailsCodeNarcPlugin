@@ -25,31 +25,34 @@ target('codenarc': 'Run CodeNarc') {
 }
 
 private void runCodenarc() {
-	   ant.taskdef(name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask')
+    ant.taskdef(name: 'codenarc', classname: 'org.codenarc.ant.CodeNarcTask')
 
-     def configClassName = getBindingValueOrDefault('configClassname', 'BuildConfig')
-	   def config = loadConfig(configClassName)
+    def configClassName = getBindingValueOrDefault('configClassname', 'BuildConfig')
+	def config = loadConfig(configClassName)
 
-     def reports = getConfiguredReports(config)
+    def reports = getConfiguredReports(config)
 
-	   int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)
-	   int maxPriority2Violations = getConfigInt(config, 'maxPriority2Violations', Integer.MAX_VALUE)
-	   int maxPriority3Violations = getConfigInt(config, 'maxPriority3Violations', Integer.MAX_VALUE)
+    int maxPriority1Violations = getConfigInt(config, 'maxPriority1Violations', Integer.MAX_VALUE)
+    int maxPriority2Violations = getConfigInt(config, 'maxPriority2Violations', Integer.MAX_VALUE)
+    int maxPriority3Violations = getConfigInt(config, 'maxPriority3Violations', Integer.MAX_VALUE)
 
-     def ruleSetFiles = config.ruleSetFiles instanceof Collection ?
+    def ruleSetFiles = config.ruleSetFiles instanceof Collection ?
          config.ruleSetFiles.join(',') : config.ruleSetFiles
 
-	   ruleSetFiles = ruleSetFiles ?:
+    ruleSetFiles = ruleSetFiles ?:
 		     'rulesets/basic.xml,rulesets/exceptions.xml,rulesets/imports.xml,rulesets/grails.xml,rulesets/unused.xml'
-	   List includes = configureIncludes(config)
-	   List excludes = configureExcludes(config)
-     boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
+    List includes = configureIncludes(config)
+    List excludes = configureExcludes(config)
+    boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
 
      configureCodeNarcPropertiesFile(config)
 
 	   println "Running CodeNarc ..."
 
      try {
+         final String CLASS_LOADER_SYS_PROP = 'codenarc.useCurrentThreadContextClassLoader'
+         System.setProperty(CLASS_LOADER_SYS_PROP, 'true')
+
          ant.codenarc(ruleSetFiles: ruleSetFiles,
                 maxPriority1Violations: maxPriority1Violations,
                 maxPriority2Violations: maxPriority2Violations,
