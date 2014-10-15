@@ -47,7 +47,7 @@ private void runCodenarc() {
 
      configureCodeNarcPropertiesFile(config)
 
-	   println "Running CodeNarc ..."
+	 println "Running CodeNarc ($ruleSetFiles) ..."
 
      try {
          final String CLASS_LOADER_SYS_PROP = 'codenarc.useCurrentThreadContextClassLoader'

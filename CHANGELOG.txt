@@ -7,6 +7,7 @@ Changes in version 0.22 (Sep 2014)
 - Pull request #4: Upgrade to CodeNarc 0.22. (Thanks to Stefan Schöffmann)
 - GPCODENARC-32: Support using custom CodeNarc rule scripts defined within the Grails project.
     Set "codenarc.useCurrentThreadContextClassLoader" system property to "true".
+- GPCODENARC-43: Codenarc script should print out the list of ruleset files being used.
 
 
 Changes in version 0.21 (Apr 2014)
