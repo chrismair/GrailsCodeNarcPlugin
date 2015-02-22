@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GrailsCodeNarc-GitHub.iml" filepath="$PROJECT_DIR$/GrailsCodeNarc-GitHub.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GrailsCodeNarc-GitHub-grailsPlugins.iml" filepath="$PROJECT_DIR$/GrailsCodeNarc-GitHub-grailsPlugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GrailsCodeNarc.iml" filepath="$PROJECT_DIR$/GrailsCodeNarc.iml" />
     </modules>
   </component>
 </project>
