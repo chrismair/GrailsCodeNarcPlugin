@@ -11,14 +11,14 @@ grails.project.dependency.resolution = {
 	}
 
 	dependencies {
-		compile "org.codenarc:CodeNarc:0.23", {
+		compile "org.codenarc:CodeNarc:0.24", {
 			excludes "log4j", "groovy", "groovy-xml", "groovy-ant", "ant", "junit"
 		}
 	}
 
 	plugins {
-		build ":release:2.2.0", {
-			export = false
-		}
+        build ':release:2.2.0', ':rest-client-builder:1.0.3', {
+            export = false
+        }
 	}
 }

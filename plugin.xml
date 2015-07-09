@@ -13,7 +13,7 @@
   </repositories>
   <dependencies>
     <compile>
-      <dependency group='org.codenarc' name='CodeNarc' version='0.23' />
+      <dependency group='org.codenarc' name='CodeNarc' version='0.24' />
     </compile>
   </dependencies>
   <plugins />
