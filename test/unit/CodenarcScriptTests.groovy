@@ -58,6 +58,7 @@ class CodenarcScriptTests extends AbstractTestCase {
     private expectedReports
     private expectedFilesetIncludes
     private expectedFilesetExcludes
+    private expectedExcludeBaseline
     private expectCallToConfigSlurper = true
 
     //-------------------------------------------------------------------------
@@ -168,6 +169,12 @@ class CodenarcScriptTests extends AbstractTestCase {
         expectedFilesetExcludes = ['**/abc*.groovy', '**/def*.groovy']
         expectedFilesetIncludes = DEFAULT_INCLUDES
         def codeNarcConfig = [excludes:EXCLUDES]
+        testRun(codeNarcConfig)
+    }
+
+    void testRun_ExcludeBaseline() {
+        def codeNarcConfig = [excludeBaseline:'ABC']
+        expectedExcludeBaseline = 'ABC'
         testRun(codeNarcConfig)
     }
 
@@ -283,9 +290,10 @@ class CodenarcScriptTests extends AbstractTestCase {
         ant.demand.codenarc { props, closure ->
             println "codenarc ant task properties=$props"
             assert props.ruleSetFiles == expectedRuleSetFiles
-			      assert props.maxPriority1Violations == expectedMaxPriority1Violations
-			      assert props.maxPriority2Violations == expectedMaxPriority2Violations
-			      assert props.maxPriority3Violations == expectedMaxPriority3Violations
+            assert props.maxPriority1Violations == expectedMaxPriority1Violations
+            assert props.maxPriority2Violations == expectedMaxPriority2Violations
+            assert props.maxPriority3Violations == expectedMaxPriority3Violations
+            assert props.excludeBaseline == expectedExcludeBaseline
 
             expectedReports.each { expectedReport ->
                 def otherProperties = new HashMap(expectedReport)

@@ -15,9 +15,9 @@
  */
 class CodenarcGrailsPlugin {
 
-	String version = '0.23'
+	String version = '0.24'
 
-  	def grailsVersion = '1.3 > *'
+  	def grailsVersion = '2.0 > *'
 
 	Map dependsOn = [:]
 
@@ -29,6 +29,7 @@ class CodenarcGrailsPlugin {
 	String documentation = 'http://grails.org/plugin/codenarc'
 
 	List developers = [
+			[name: "Chris Mair", email: "chrismair@users.sourceforge.net"],
 			[name: "Burt Beckwith", email: "burt@burtbeckwith.com"],
 			[name: "Peter Ledbrook", email: "peter@cacoethes.co.uk"] ]
 

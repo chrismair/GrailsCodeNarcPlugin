@@ -44,19 +44,21 @@ private void runCodenarc() {
     List includes = configureIncludes(config)
     List excludes = configureExcludes(config)
     boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
+    String excludeBaseline = config.containsKey('excludeBaseline') ? config.excludeBaseline : null
 
-     configureCodeNarcPropertiesFile(config)
+    configureCodeNarcPropertiesFile(config)
 
-	 println "Running CodeNarc ($ruleSetFiles) ..."
+    println "Running CodeNarc ($ruleSetFiles) ..."
 
-     try {
+    try {
          final String CLASS_LOADER_SYS_PROP = 'codenarc.useCurrentThreadContextClassLoader'
          System.setProperty(CLASS_LOADER_SYS_PROP, 'true')
 
-         ant.codenarc(ruleSetFiles: ruleSetFiles,
+        ant.codenarc(ruleSetFiles: ruleSetFiles,
                 maxPriority1Violations: maxPriority1Violations,
                 maxPriority2Violations: maxPriority2Violations,
-                maxPriority3Violations: maxPriority3Violations) {
+                maxPriority3Violations: maxPriority3Violations,
+                excludeBaseline: excludeBaseline) {
 
             reports.each { r ->
                 report(type: r.type) {
@@ -68,7 +70,7 @@ private void runCodenarc() {
                 }
             }
             fileset(dir: '.', includes: includes.join(','), excludes: excludes.join(','))
-         }
+        }
     }
     catch(BuildException e) {
         if (systemExitOnBuildException) {
@@ -81,7 +83,7 @@ private void runCodenarc() {
     }
 
     def reportNames = reports.collect { report -> report.outputFile ?: report.type }
-	  println "CodeNarc finished; report(s) generated: $reportNames"
+    println "CodeNarc finished; report(s) generated: $reportNames"
 }
 
 private ConfigObject loadConfig(String className) {

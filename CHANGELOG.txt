@@ -2,6 +2,13 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.24 (Jul 2015)
+--------------------------------------
+- GPCODENARC-45: Upgrade plugin to use CodeNarc 0.24.
+    * Support new "sortable" and "baseline" report types.
+    * Add new "excludeBaseline" configuration option for (experimental) baseline violations support. It specifies the path to a baseline violations report (report type "baseline") If set, then all violations specified within that report are excluded (filtered) from the current CodeNarc run.
+
+
 Changes in version 0.23 (Feb 2015)
 --------------------------------------
 - GPCODENARC-44: Upgrade plugin to use CodeNarc 0.23.
