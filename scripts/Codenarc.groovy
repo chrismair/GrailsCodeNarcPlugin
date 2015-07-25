@@ -44,7 +44,7 @@ private void runCodenarc() {
     List includes = configureIncludes(config)
     List excludes = configureExcludes(config)
     boolean systemExitOnBuildException = getConfigBoolean(config, 'systemExitOnBuildException')
-    String excludeBaseline = config.containsKey('excludeBaseline') ? config.excludeBaseline : null
+    String excludeBaseline = config.containsKey('excludeBaseline') ? config.excludeBaseline : ''
 
     configureCodeNarcPropertiesFile(config)
 
@@ -75,6 +75,7 @@ private void runCodenarc() {
     catch(BuildException e) {
         if (systemExitOnBuildException) {
             println "FAILED -- ${e.message}"
+            e.printStackTrace(System.out)
             System.exit(1)
         }
         else {

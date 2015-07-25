@@ -2,6 +2,11 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.24.?? (??? 2015)
+--------------------------------------
+#6: FileNotFoundException: File [null] does not exist or is not accessible.
+
+
 Changes in version 0.24 (Jul 2015)
 --------------------------------------
 - GPCODENARC-45: Upgrade plugin to use CodeNarc 0.24.

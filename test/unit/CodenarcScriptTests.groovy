@@ -389,6 +389,7 @@ class CodenarcScriptTests extends AbstractTestCase {
         expectedFilesetIncludes = DEFAULT_INCLUDES
         expectedFilesetExcludes = DEFAULT_EXCLUDES
         expectedReports = [ [type:HTML, outputFile:REPORT_FILE, title:''] ]
+        expectedExcludeBaseline = ''
     }
 
     private loadScriptClass() {
