@@ -2,6 +2,11 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Changes in version 0.25.1 (Feb 2016)
+--------------------------------------
+#7: Upgrade plugin to use CodeNarc 0.25.1.
+
+
 Changes in version 0.24.1 (Aug 2015)
 --------------------------------------
 #47: Upgrade plugin to use CodeNarc 0.24.1.
