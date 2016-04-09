@@ -8,10 +8,11 @@ grails.project.dependency.resolution = {
 	repositories {
 		grailsCentral()
 		mavenCentral()
+		mavenRepo "http://repo.grails.org/grails/plugins"
 	}
 
 	dependencies {
-		compile "org.codenarc:CodeNarc:0.25.1", {
+		compile "org.codenarc:CodeNarc:0.25.2", {
 			excludes "log4j", "groovy", "groovy-xml", "groovy-ant", "ant", "junit"
 		}
 	}
