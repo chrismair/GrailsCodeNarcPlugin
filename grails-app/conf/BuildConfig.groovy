@@ -2,6 +2,9 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir	= "target/test-reports"
 
+
+grails.project.dependency.resolver = "maven"
+
 grails.project.dependency.resolution = {
 	inherits "global"
 	log "warn" 
@@ -12,13 +15,13 @@ grails.project.dependency.resolution = {
 	}
 
 	dependencies {
-		compile "org.codenarc:CodeNarc:0.25.2", {
+		compile "org.codenarc:CodeNarc:0.26.0", {
 			excludes "log4j", "groovy", "groovy-xml", "groovy-ant", "ant", "junit"
 		}
 	}
 
 	plugins {
-        build ':release:2.2.0', ':rest-client-builder:1.0.3', {
+        build ':release:3.0.1', ':rest-client-builder:1.0.3', {
             export = false
         }
 	}

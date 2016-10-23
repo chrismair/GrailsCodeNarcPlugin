@@ -1,4 +1,4 @@
-<plugin name='codenarc' version='0.25.2' grailsVersion='2.0 &gt; *'>
+<plugin name='codenarc' version='0.26.0' grailsVersion='2.0 &gt; *'>
   <author>Chris Mair</author>
   <authorEmail>chrismair@users.sourceforge.net</authorEmail>
   <title>CodeNarc plugin</title>
@@ -6,18 +6,4 @@
   <documentation>http://grails.org/plugin/codenarc</documentation>
   <type>CodenarcGrailsPlugin</type>
   <resources />
-  <repositories>
-    <repository name='grailsCentral' url='http://grails.org/plugins' />
-    <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
-    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
-    <repository name='http://repo.grails.org/grails/plugins' url='http://repo.grails.org/grails/plugins/' />
-  </repositories>
-  <dependencies>
-    <compile>
-      <dependency group='org.codenarc' name='CodeNarc' version='0.25.2' />
-    </compile>
-  </dependencies>
-  <plugins />
-  <runtimePluginRequirements />
-  <behavior />
 </plugin>
