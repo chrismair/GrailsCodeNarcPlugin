@@ -28,7 +28,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
-    <orderEntry type="library" name="groovy-2.4.7" level="application" />
     <orderEntry type="library" name="grails-2.5.4" level="project" />
+    <orderEntry type="library" name="groovy-2.4.9" level="application" />
   </component>
 </module>
