@@ -15,9 +15,9 @@
  */
 class CodenarcGrailsPlugin {
 
-	String version = '0.27.0'
+	String version = '1.0'
 
-  	def grailsVersion = '2.0 > *'
+  	def grailsVersion = '2.4 > *'
 
 	Map dependsOn = [:]
 

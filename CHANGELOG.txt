@@ -2,7 +2,12 @@ CodeNarc Grails Plugin Change Log
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
-Changes in version 0.27.0 (Mar 2016)
+Version 1.0 (Sep 2017)
+--------------------------------------
+- #14: Upgrade plugin to CodeNarc 1.0. That requires Groovy 2.3, which implies it is compatible only with Grails 2.4.0 or later. (So, use for Grails version >= 2.4 and < 3.x).
+
+
+Version 0.27.0 (Mar 2017)
 --------------------------------------
 - #13: Upgrade plugin to use CodeNarc 0.27.0.
 
