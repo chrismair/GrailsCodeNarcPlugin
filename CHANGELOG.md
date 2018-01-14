@@ -108,8 +108,8 @@ Changes in version 0.15 (05 Aug 2011)
 Changes in version 0.14 (02 Jul 2011)
 --------------------------------------
 - Feature: GPCODENARC-19. Upgrade to CodeNarc 0.14
-- Feature: GPCODENARC-18. Move configuration to “BuildConfig.groovy”. Write out warning message if CodeNarc config still exists in “Config.groovy”.  [Jul 2]
-- Fix http://jira.grails.org/browse/GPCODENARC-13. Including AbcComplexity and CyclomaticComplexity rules in ruleset makes no rules work. Include GMetrics jar as a dependency. [Jun 12]
+- Feature: GPCODENARC-18. Move configuration to “BuildConfig.groovy”. Write out warning message if CodeNarc config still exists in “Config.groovy”.
+- Fix http://jira.grails.org/browse/GPCODENARC-13. Including AbcComplexity and CyclomaticComplexity rules in ruleset makes no rules work. Include GMetrics jar as a dependency.
 - Fix GPCODENARC-14. Exclude CodeNarc Plugin from war builds by default.
 
 
@@ -118,6 +118,7 @@ Changes in version 0.12 (03 Apr 2011)
 - Fix #11: Allow CodeNarc rules to be applied to GSP files: http://jira.grails.org/browse/GPCODENARC-11.
   Add support in "config.groovy" for: codenarc.processViews = true
 - Feature #7: Generate Multiple Reports: http://jira.grails.org/browse/GPCODENARC-7. e.g.
+```
         codenarc.reports = {
             CodeNarcXmlReport('xml') {
                 outputFile = 'CodeNarc-Report.xml'
@@ -128,6 +129,7 @@ Changes in version 0.12 (03 Apr 2011)
                 title = 'Sample Report'
             }
         }
+```
 - Fix #9: Provide error message on failure instead of throwing BuildException: http://jira.grails.org/browse/GPCODENARC-9
   Add support for systemExitOnBuildException configuration option; defaults to true.
 
@@ -162,15 +164,15 @@ Changes in version 0.8 (14 Nov 2010)
 
 Changes in version 0.7 (2 Oct 2010)
 --------------------------------------
-- Add support in "Config.groovy" for using a custom �codenarc.properties�.
-    * Support setting an optional property: e.g. codenarc.propertiesFile = �file:grails-app/conf/codenarc.properties�. Prepend "file:" prefix.
+- Add support in "Config.groovy" for using a custom"codenarc.properties".
+    * Support setting an optional property: e.g. codenarc.propertiesFile ="file:grails-app/conf/codenarc.properties". Prepend "file:" prefix.
 - Upgrade to CodeNarc v0.10.
 - Upgrade project to Grails 1.2. This does not affect the versions of Grails supported by the plugin.
 
 
 Changes in version 0.6.1 (27 May 2010)
 --------------------------------------
-- Fix http://jira.codehaus.org/browse/GRAILSPLUGINS-2193. �CodeNarc plugin doesn�t run (on Grails 1.3.1)�. Explicitly set default target within �Codenarc.groovy� script.
+- Fix http://jira.codehaus.org/browse/GRAILSPLUGINS-2193."CodeNarc plugin doesn"t run (on Grails 1.3.1)". Explicitly set default target within"Codenarc.groovy" script.
 
 
 Changes in version 0.6 (21 May 2010)
@@ -188,7 +190,7 @@ Changes in version 0.5 (03 Feb 2010)
 Changes in version 0.4 (19 Jan 2010)
 ------------------------------------
 - Upgrade to CodeNarc 0.8. This includes XML and Text report formats (beta), a new NestedBlockDepthRule,
-  enhancement of the applyToFileNames rule property to handle optional path (e.g. �abc/def/MyClass.groovy�).
+  enhancement of the applyToFileNames rule property to handle optional path (e.g."abc/def/MyClass.groovy").
 
 
 Changes in version 0.3 (26 Aug 2009)
@@ -199,10 +201,10 @@ Changes in version 0.3 (26 Aug 2009)
 
 Changes in version 0.2 (18 Jul 2009)
 ------------------------------------
-- Add �Unused� ruleset to default rulesets.
+- Add "Unused" ruleset to default rulesets.
 - Upgrade to CodeNarc 0.6.
-- Include �test� folders in analysis; add codenarc.processTestUnit and codenarc.processTestIntegration  properties in Config.groovy.
-- Rename default report file to �CodeNarcReport.html�.
+- Include "test" folders in analysis; add codenarc.processTestUnit and codenarc.processTestIntegration  properties in Config.groovy.
+- Rename default report file to"CodeNarcReport.html".
 - Update author and authorEmail fields in CodenarcGrailsPlugin. (Original=Burt Beckwith).
 - Create automated test script for CodeNarc plugin.
 - Create tests for plugin.
