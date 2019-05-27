@@ -2,6 +2,11 @@
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
+Version 1.3 (May 2019)
+--------------------------------------
+- #21: Use HTTPS for BuildConfig repositories
+
+
 Version 1.3 (Jan 2019)
 --------------------------------------
 - #19: Upgrade to CodeNarc v1.3
