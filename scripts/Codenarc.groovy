@@ -242,6 +242,9 @@ private List configureIncludes(config) {
 
     for (includeDir in config.extraIncludeDirs) {
         includes << "$includeDir/**/*.groovy"
+        if (getConfigBoolean(config, 'processExtraIncludeDirsViews', false)) {
+            includes << "$includeDir/**/*.gsp"
+        }
     }
 
     return includes
