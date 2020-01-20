@@ -163,7 +163,14 @@ class CodenarcScriptTests extends AbstractTestCase {
         def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false, extraIncludeDirs:EXTRA]
         testRun(codeNarcConfig)
     }
-    
+
+    void testRun_ExtraIncludeDirs_processExtraIncludeDirsViews() {
+        final EXTRA = ['def/ghi']
+        expectedFilesetIncludes = [SRC_GROOVY, CONTROLLERS, DOMAIN, TEST_UNIT, 'def/ghi/**/*.groovy', 'def/ghi/**/*.gsp']
+        def codeNarcConfig = [processServices:false, processTaglib:false, processUtils:false, processTestIntegration:false, extraIncludeDirs:EXTRA, processExtraIncludeDirsViews:true]
+        testRun(codeNarcConfig)
+    }
+
     void testRun_Excludes() {
         final EXCLUDES = ['**/abc*.groovy', '**/def*.groovy']
         expectedFilesetExcludes = ['**/abc*.groovy', '**/def*.groovy']
