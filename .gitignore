@@ -4,3 +4,4 @@ grails-codenarc-*.zip*
 stacktrace.log
 target/
 web-app/
+out/
