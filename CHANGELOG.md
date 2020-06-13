@@ -2,8 +2,9 @@
 -------------------------------------------------------------------------------
 http://grails.org/plugin/codenarc
 
-TODO: Version 1.6 (May? 2020)
+Version 1.6 (May 2020)
 --------------------------------------
+ - #27: Upgrade to CodeNarc v1.6.
  - PR #25: Add `processExtraIncludeDirsViews` property: process GSPs in included extra included dirs. Fix #23. (nkovalenko93)
 
 
