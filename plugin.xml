@@ -1,4 +1,4 @@
-<plugin name='codenarc' version='1.5' grailsVersion='2.4 &gt; *'>
+<plugin name='codenarc' version='1.6' grailsVersion='2.4 &gt; *'>
   <author>Chris Mair</author>
   <authorEmail>chrismair@users.sourceforge.net</authorEmail>
   <title>CodeNarc plugin</title>

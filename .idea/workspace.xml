@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6d88ab53-d902-4206-a4a2-3a4d6d2767d5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CodenarcGrailsPlugin.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/CodenarcGrailsPlugin.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/grails-app/conf/BuildConfig.groovy" afterDir="false" />
+    <list default="true" id="6d88ab53-d902-4206-a4a2-3a4d6d2767d5" name="Default" comment="#27: Upgrade to CodeNarc v1.6">
+      <change beforePath="$PROJECT_DIR$/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -371,7 +368,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592062122394</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="#27: Upgrade to CodeNarc v1.6">
+      <created>1592062248452</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1592062248452</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -406,41 +410,42 @@
     <MESSAGE value="#22: Upgrade to CodeNarc v1.5" />
     <MESSAGE value="Update test for PR #25: Add `processExtraIncludeDirsViews` property." />
     <MESSAGE value="Switch IntelliJ config to inherit project compiler output" />
-    <option name="LAST_COMMIT_MESSAGE" value="Switch IntelliJ config to inherit project compiler output" />
+    <MESSAGE value="#27: Upgrade to CodeNarc v1.6" />
+    <option name="LAST_COMMIT_MESSAGE" value="#27: Upgrade to CodeNarc v1.6" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2653" y="455" width="434" height="171" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog" timestamp="1591920924650">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2653" y="455" width="434" height="171" key="#com.intellij.framework.addSupport.AddSupportForSingleFrameworkDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1591920924650" />
-    <state x="2406" y="87" width="937" height="904" key="CommitChangelistDialog2" timestamp="1592062122086">
+    <state x="2406" y="87" width="937" height="904" key="CommitChangelistDialog2" timestamp="1592062248224">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2406" y="87" width="937" height="904" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062122086" />
-    <state x="2020" y="98" width="1720" height="882" key="DiffContextDialog" timestamp="1592062143897">
+    <state x="2406" y="87" width="937" height="904" key="CommitChangelistDialog2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062248224" />
+    <state x="2020" y="98" width="1720" height="882" key="DiffContextDialog" timestamp="1592070605852">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2020" y="98" width="1720" height="882" key="DiffContextDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062143897" />
+    <state x="2020" y="98" width="1720" height="882" key="DiffContextDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592070605852" />
     <state x="2653" y="282" width="424" height="513" key="FileChooserDialogImpl" timestamp="1591920922504">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2653" y="282" width="424" height="513" key="FileChooserDialogImpl/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1591920922504" />
-    <state width="1874" height="284" key="GridCell.Tab.0.bottom" timestamp="1592061517871">
+    <state width="1874" height="284" key="GridCell.Tab.0.bottom" timestamp="1592062226732">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1874" height="284" key="GridCell.Tab.0.bottom/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592061517871" />
-    <state width="1874" height="284" key="GridCell.Tab.0.center" timestamp="1592061517871">
+    <state width="1874" height="284" key="GridCell.Tab.0.bottom/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062226732" />
+    <state width="1874" height="284" key="GridCell.Tab.0.center" timestamp="1592062226731">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1874" height="284" key="GridCell.Tab.0.center/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592061517871" />
-    <state width="1874" height="284" key="GridCell.Tab.0.left" timestamp="1592061517871">
+    <state width="1874" height="284" key="GridCell.Tab.0.center/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062226731" />
+    <state width="1874" height="284" key="GridCell.Tab.0.left" timestamp="1592062226731">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1874" height="284" key="GridCell.Tab.0.left/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592061517871" />
-    <state width="1874" height="284" key="GridCell.Tab.0.right" timestamp="1592061517871">
+    <state width="1874" height="284" key="GridCell.Tab.0.left/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062226731" />
+    <state width="1874" height="284" key="GridCell.Tab.0.right" timestamp="1592062226731">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1874" height="284" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592061517871" />
+    <state width="1874" height="284" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062226731" />
     <state x="2544" y="222" width="661" height="633" key="RollbackChangesDialog" timestamp="1592061384149">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -449,6 +454,10 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2363" y="116" width="1024" height="845" key="SettingsEditor/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592061455613" />
+    <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1592062252072">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2475" y="275" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1592062252072" />
     <state x="2570" y="278" width="620" height="522" key="find.popup" timestamp="1591921653012">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
